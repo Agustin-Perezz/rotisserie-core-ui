@@ -27,7 +27,6 @@ export const signInWithGoogle = async (): Promise<UserCredential | null> => {
       throw new Error(CREDENTIALS_NOT_FOUND);
     }
 
-    //const token = credential.accessToken;
     successToast(SUCCESS_SIGN_IN_MESSAGE);
     return result;
   } catch (error) {
@@ -46,9 +45,23 @@ export const signInWithFacebook = async (): Promise<UserCredential | null> => {
       throw new Error(CREDENTIALS_NOT_FOUND);
     }
 
-    //const token = credential.accessToken;
     successToast(SUCCESS_SIGN_IN_MESSAGE);
     return result;
+  } catch (error) {
+    const firebaseError = error as AuthError;
+    errorToast(firebaseError.message);
+    return null;
+  }
+};
+
+export const getAccessToken = async (): Promise<string | null> => {
+  try {
+    const user = auth.currentUser;
+    if (user) {
+      const token = await user.getIdToken();
+      return token;
+    }
+    return null;
   } catch (error) {
     const firebaseError = error as AuthError;
     errorToast(firebaseError.message);
