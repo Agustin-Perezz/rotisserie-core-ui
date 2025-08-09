@@ -53,5 +53,9 @@
     />
   {/each}
 
-  <button disabled={$isSubmitting} type="submit">Submit</button>
+  <button
+    disabled={$isSubmitting}
+    type="submit"
+    data-testid="submit-shop-button">Submit</button
+  >
 </form>
