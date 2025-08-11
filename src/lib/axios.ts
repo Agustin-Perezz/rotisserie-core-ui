@@ -29,10 +29,18 @@ api.interceptors.request.use(
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    const errorMessage =
-      error.response?.data?.message ||
-      error.message ||
-      'An unexpected error occurred';
+    let errorMessage = 'An unexpected error occurred';
+
+    if (error.response?.data?.message) {
+      if (Array.isArray(error.response.data.message)) {
+        errorMessage = error.response.data.message.join(', ');
+      } else {
+        errorMessage = error.response.data.message;
+      }
+    } else if (error.message) {
+      errorMessage = error.message;
+    }
+
     errorToast(errorMessage);
     return Promise.reject(error);
   }
