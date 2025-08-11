@@ -1,3 +1,3 @@
 export type HandleSubmitForm<T> = {
-  handleSubmit: (values: T) => void;
+  handleSubmit: (values: T) => Promise<void>;
 };

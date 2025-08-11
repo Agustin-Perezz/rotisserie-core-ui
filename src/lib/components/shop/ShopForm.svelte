@@ -3,10 +3,10 @@
   import { validator } from '@felte/validator-zod';
   import InputField from '$lib/components/form/InputField.svelte';
   import type { HandleSubmitForm } from '$lib/types/form';
-  import type { TShop } from '$lib/types/shop';
+  import type { TShopFormData } from '$lib/types/shop';
   import { shopFormSchema } from '$lib/schemas/shop.schema';
 
-  const { handleSubmit }: HandleSubmitForm<TShop> = $props();
+  const { handleSubmit }: HandleSubmitForm<TShopFormData> = $props();
 
   const shopInputData = [
     {
