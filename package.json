@@ -13,6 +13,7 @@
     "format": "prettier --write .",
     "lint": "prettier --check . && eslint .",
     "test:e2e": "playwright test",
+    "test:open": "playwright test --ui",
     "test": "npm run test:e2e"
   },
   "devDependencies": {
