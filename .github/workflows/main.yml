@@ -32,3 +32,5 @@ jobs:
           VITE_FIREBASE_API_KEY: test
       - name: Build
         run: pnpm build
+        env:
+          VITE_FIREBASE_API_KEY: test
