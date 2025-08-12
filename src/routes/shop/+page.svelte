@@ -37,4 +37,6 @@
   ];
 </script>
 
-<DataTable data={mockProducts} {columns} />
+<div class="m-0 flex h-screen items-center justify-center">
+  <DataTable data={mockProducts} {columns} />
+</div>
