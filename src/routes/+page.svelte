@@ -1,17 +1,10 @@
 <script lang="ts">
-  import ShopForm from '$lib/components/shop/ShopForm.svelte';
-  import { createShop } from '$lib/services/shop';
-
-  type Test = {
-    name: string;
-    description?: string;
-    location: string;
-  };
-
-  const handleSubmit = async (values: Test) => {
-    const test = await createShop(values);
-    console.log('Shop created:', test);
-  };
+  import Button from '$lib/components/ui/button/button.svelte';
 </script>
 
-<ShopForm {handleSubmit} />
+<div class="flex h-screen flex-col items-center justify-center">
+  <h1 class="mb-4 text-2xl font-bold">Hola!, como andas ?</h1>
+  <Button href="/shop/new" data-testid="navigate-shop-button"
+    >Crea un nuevo negocio</Button
+  >
+</div>

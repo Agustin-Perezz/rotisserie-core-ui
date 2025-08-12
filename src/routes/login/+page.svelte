@@ -1,8 +1,14 @@
 <script lang="ts">
-  import { signInWithFacebook, signInWithGoogle } from '$lib/services/auth';
+  import {
+    getAccessToken,
+    signInWithFacebook,
+    signInWithGoogle
+  } from '$lib/services/auth';
 
   const handleSignInWithGoogle = async () => {
     await signInWithGoogle();
+    const token = await getAccessToken();
+    console.log('Google Access Token:', token);
   };
 
   const handleSignInWithFacebook = async () => {
