@@ -28,5 +28,7 @@ jobs:
         run: npx playwright install
       - name: Run E2E Test
         run: pnpm test
+        env:
+          VITE_FIREBASE_API_KEY: test
       - name: Build
         run: pnpm build
