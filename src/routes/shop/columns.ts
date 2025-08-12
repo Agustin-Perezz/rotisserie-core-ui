@@ -10,18 +10,18 @@ export const columns: ColumnDef<IItemTable>[] = [
   },
   {
     accessorKey: 'name',
-    header: 'Name'
+    header: 'Nombre'
   },
   {
     accessorKey: 'description',
-    header: 'Description'
+    header: 'Descripción'
   },
   {
     accessorKey: 'price',
-    header: 'Price'
+    header: 'Precio'
   },
   {
-    header: 'Actions',
+    header: 'Acciones',
     id: 'actions',
     cell: ({ row }) => {
       return renderComponent(DataTableActions, { id: row.original.id });

@@ -28,7 +28,7 @@
       </DropdownMenu.Item>
     </DropdownMenu.Group>
     <DropdownMenu.Separator />
-    <DropdownMenu.Item>View customer</DropdownMenu.Item>
-    <DropdownMenu.Item>View payment details</DropdownMenu.Item>
+    <DropdownMenu.Item>Editar</DropdownMenu.Item>
+    <DropdownMenu.Item>Eliminar</DropdownMenu.Item>
   </DropdownMenu.Content>
 </DropdownMenu.Root>
