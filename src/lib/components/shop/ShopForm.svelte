@@ -5,6 +5,7 @@
   import type { HandleSubmitForm } from '$lib/types/form';
   import type { TShopFormData } from '$lib/types/shop';
   import { shopFormSchema } from '$lib/schemas/shop.schema';
+  import Button from '../ui/button/button.svelte';
 
   const { handleSubmit }: HandleSubmitForm<TShopFormData> = $props();
 
@@ -53,9 +54,9 @@
     />
   {/each}
 
-  <button
+  <Button
     disabled={$isSubmitting}
     type="submit"
-    data-testid="submit-shop-button">Submit</button
+    data-testid="submit-shop-button">Submit</Button
   >
 </form>
