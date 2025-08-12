@@ -24,7 +24,14 @@ export const columns: ColumnDef<IItemTable>[] = [
     header: 'Acciones',
     id: 'actions',
     cell: ({ row }) => {
-      return renderComponent(DataTableActions, { id: row.original.id });
+      return renderComponent(DataTableActions, {
+        handleClickEdit: () => {
+          console.log('Edit', row.original.id);
+        },
+        handleClickDelete: () => {
+          console.log('Delete', row.original.id);
+        }
+      });
     }
   }
 ];

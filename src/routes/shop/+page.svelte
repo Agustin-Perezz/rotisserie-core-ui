@@ -1,5 +1,5 @@
 <script lang="ts">
-  import DataTable from './data-table.svelte';
+  import ShopTable from './shop-table.svelte';
   import { columns } from './columns.js';
 
   // Mock data for shop payments
@@ -38,5 +38,5 @@
 </script>
 
 <div class="m-0 flex h-screen items-center justify-center">
-  <DataTable data={mockProducts} {columns} />
+  <ShopTable data={mockProducts} {columns} />
 </div>

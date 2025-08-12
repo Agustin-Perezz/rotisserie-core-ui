@@ -3,7 +3,12 @@
   import { Button } from '$lib/components/ui/button/index.js';
   import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
 
-  let { id }: { id: string } = $props();
+  type Props = {
+    handleClickEdit: () => void;
+    handleClickDelete: () => void;
+  };
+
+  let { handleClickEdit, handleClickDelete }: Props = $props();
 </script>
 
 <DropdownMenu.Root>
@@ -22,13 +27,10 @@
   </DropdownMenu.Trigger>
   <DropdownMenu.Content>
     <DropdownMenu.Group>
-      <DropdownMenu.Label>Actions</DropdownMenu.Label>
-      <DropdownMenu.Item onclick={() => navigator.clipboard.writeText(id)}>
-        Copy payment ID
-      </DropdownMenu.Item>
+      <DropdownMenu.Label>Acciones</DropdownMenu.Label>
     </DropdownMenu.Group>
     <DropdownMenu.Separator />
-    <DropdownMenu.Item>Editar</DropdownMenu.Item>
-    <DropdownMenu.Item>Eliminar</DropdownMenu.Item>
+    <DropdownMenu.Item onclick={handleClickEdit}>Editar</DropdownMenu.Item>
+    <DropdownMenu.Item onclick={handleClickDelete}>Eliminar</DropdownMenu.Item>
   </DropdownMenu.Content>
 </DropdownMenu.Root>
