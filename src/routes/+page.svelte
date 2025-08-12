@@ -14,4 +14,7 @@
   };
 </script>
 
-<ShopForm {handleSubmit} />
+<div class="flex h-screen flex-col items-center justify-center">
+  <h1 class="mb-4 text-2xl font-bold">Create a New Shop</h1>
+  <ShopForm {handleSubmit} />
+</div>
