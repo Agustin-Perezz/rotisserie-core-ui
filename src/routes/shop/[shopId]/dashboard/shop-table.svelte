@@ -22,7 +22,7 @@
   });
 </script>
 
-<div class="m-4 min-w-48 rounded border p-2">
+<div class="m-4 min-w-48 rounded border p-2" data-testid="shop-table">
   <Table.Root>
     <Table.Header>
       {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
