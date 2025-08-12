@@ -1,6 +1,6 @@
 <script lang="ts">
   import { columns } from './shop-columns';
-  import ShopTable from './shop-table.svelte';
+  import ShopTable from './components/ShopTable.svelte';
 
   // Mock data for shop payments
   const mockProducts = [
