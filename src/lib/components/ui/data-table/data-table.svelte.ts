@@ -5,6 +5,7 @@ import {
   type TableState,
   createTable
 } from '@tanstack/table-core';
+import { SvelteSet } from 'svelte/reactivity';
 
 export function createSvelteTable<TData extends RowData>(
   options: TableOptions<TData>
@@ -93,7 +94,7 @@ export function mergeObjects<Sources extends readonly MaybeThunk<any>[]>(
     },
 
     ownKeys(): (string | symbol)[] {
-      const all = new Set<string | symbol>();
+      const all = new SvelteSet<string | symbol>();
       for (const s of sources) {
         const obj = resolve(s);
         if (obj) {
