@@ -6,6 +6,11 @@ import type {
   TUpdateItemFormData
 } from '$lib/types/item';
 
+export const getItem = async (id: string): Promise<TItem> => {
+  const response = await api.get<TItem>(`/items/${id}`);
+  return response.data;
+};
+
 export const createItem = async (data: TCreateItemFormData): Promise<TItem> => {
   const response = await api.post<TItem>('/items', data);
   successToast('Item creado exitosamente!');
@@ -13,7 +18,7 @@ export const createItem = async (data: TCreateItemFormData): Promise<TItem> => {
 };
 
 export const updateItem = async (data: TUpdateItemFormData): Promise<TItem> => {
-  const response = await api.put<TItem>(`/items/${data.id}`, data);
+  const response = await api.patch<TItem>(`/items/${data.id}`, data);
   successToast('Item actualizado exitosamente!');
   return response.data;
 };
