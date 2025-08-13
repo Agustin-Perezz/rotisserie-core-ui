@@ -2,16 +2,20 @@
   import { createForm } from 'felte';
   import { validator } from '@felte/validator-zod';
   import InputField from '$lib/components/form/InputField.svelte';
-  import type { HandleSubmitForm } from '$lib/types/form';
   import Button from '$lib/components/ui/button/button.svelte';
   import { createItemSchema } from '$lib/schemas/item.schema';
   import { page } from '$app/state';
   import type { TCreateItemFormData } from '$lib/types/item';
   import ImageField from '$lib/components/form/ImageField.svelte';
 
+  type Props = {
+    handleSubmit: (values: TCreateItemFormData) => Promise<void>;
+    initialValues?: Partial<TCreateItemFormData>;
+  };
+
   const shopId = page.params.shopId;
 
-  const { handleSubmit }: HandleSubmitForm<TCreateItemFormData> = $props();
+  const { handleSubmit, initialValues }: Props = $props();
 
   const itemInputData = [
     {
@@ -36,9 +40,11 @@
 
   const { form, errors, isSubmitting } = createForm<TCreateItemFormData>({
     initialValues: {
-      name: '',
-      description: '',
-      price: 0,
+      id: initialValues?.id || undefined,
+      name: initialValues?.name || '',
+      description: initialValues?.description || '',
+      price: initialValues?.price || 0,
+      image: initialValues?.image || '',
       shopId: shopId
     },
     onSubmit: handleSubmit,
