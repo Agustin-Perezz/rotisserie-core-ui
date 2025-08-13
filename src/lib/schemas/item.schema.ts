@@ -6,7 +6,7 @@ export const createItemSchema = z.object({
     z.string().max(200, 'La descripción no puede exceder los 200 caracteres')
   ),
   price: z.number().min(0, 'El precio debe ser un número positivo'),
-  /*image: z.optional(
+  image: z.optional(
     z
       .instanceof(File, { message: 'Debe ser un archivo válido' })
       .refine((file) => file.size <= 5 * 1024 * 1024, {
@@ -18,6 +18,6 @@ export const createItemSchema = z.object({
           message: 'Solo se permiten imágenes en formato JPEG, PNG o WebP'
         }
       )
-  ),*/
+  ),
   shopId: z.string().min(1, 'El ID de la tienda es obligatorio')
 });
