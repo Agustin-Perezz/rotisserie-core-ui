@@ -3,11 +3,17 @@ import api from '$lib/axios';
 import type {
   TItem,
   TCreateItemFormData,
-  TUpdateItemFormData
+  TUpdateItemFormData,
+  IItemTable
 } from '$lib/types/item';
 
 export const getItem = async (id: string): Promise<TItem> => {
   const response = await api.get<TItem>(`/items/${id}`);
+  return response.data;
+};
+
+export const getItems = async (shopId: string): Promise<IItemTable[]> => {
+  const response = await api.get<IItemTable[]>(`/items?shopId=${shopId}`);
   return response.data;
 };
 
