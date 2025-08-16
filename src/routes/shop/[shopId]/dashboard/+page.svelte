@@ -1,42 +1,28 @@
 <script lang="ts">
-  import { columns } from './shop-columns';
   import ShopTable from './components/ShopTable.svelte';
+  import { getItems } from '$lib/services/item';
+  import { page } from '$app/state';
+  import { useFetch } from '$lib/hooks/useFetch';
+  import { createColumns } from './shop-columns';
 
-  // Mock data for shop payments
-  const mockProducts = [
-    {
-      id: '1',
-      name: 'Product A',
-      description: 'Description for Product A',
-      price: 49.99
-    },
-    {
-      id: '2',
-      name: 'Product B',
-      description: 'Description for Product B',
-      price: 124.5
-    },
-    {
-      id: '3',
-      name: 'Product C',
-      description: 'Description for Product C',
-      price: 75.25
-    },
-    {
-      id: '4',
-      name: 'Product D',
-      description: 'Description for Product D',
-      price: 199.99
-    },
-    {
-      id: '5',
-      name: 'Product E',
-      description: 'Description for Product E',
-      price: 32.75
-    }
-  ];
+  const {
+    data: items,
+    loading,
+    error,
+    run: refetchItems
+  } = useFetch(() => getItems(page.params.shopId), true);
+
+  const columns = createColumns(refetchItems);
 </script>
 
-<div class="m-0 flex h-screen items-center justify-center">
-  <ShopTable data={mockProducts} {columns} />
-</div>
+{#if $loading}
+  <p>Loading...</p>
+{:else if $error}
+  <div class="m-0 flex h-screen items-center justify-center">
+    <p>Error loading items: {$error.message}</p>
+  </div>
+{:else if $items}
+  <div class="m-0 flex h-screen items-center justify-center">
+    <ShopTable data={$items} {columns} />
+  </div>
+{/if}

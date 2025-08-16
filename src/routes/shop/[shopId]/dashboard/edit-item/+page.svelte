@@ -2,15 +2,13 @@
   import { getItem, updateItem } from '$lib/services/item';
   import type { TCreateItemFormData } from '$lib/types/item';
   import ItemForm from '../components/ItemForm.svelte';
-  import { page } from '$app/state';
+  import { currentItemId } from '$lib/stores/item-store';
 
   const getItemData = async () => {
-    const itemId = page.params.itemId;
-    return await getItem(itemId);
+    return await getItem($currentItemId);
   };
 
   const handleSubmit = async (values: TCreateItemFormData) => {
-    // Handle form submission logic here
     await updateItem(values);
     console.log('Form submitted with values:', values);
   };
