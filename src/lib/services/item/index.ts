@@ -12,7 +12,10 @@ export const getItem = async (id: string): Promise<TItem> => {
   return response.data;
 };
 
-export const getItems = async (shopId: string): Promise<IItemTable[]> => {
+export const getItems = async (shopId?: string): Promise<IItemTable[]> => {
+  if (!shopId) {
+    throw new Error('El id de la tienda es requerido.');
+  }
   const response = await api.get<IItemTable[]>(`/items?shopId=${shopId}`);
   return response.data;
 };
