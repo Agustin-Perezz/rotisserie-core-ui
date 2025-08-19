@@ -2,10 +2,15 @@ import { writable } from 'svelte/store';
 import type { TItem } from '$lib/types/item';
 import type { TOrderContext } from '$lib/types/order';
 
-const orderStore = writable<TOrderContext | null>(null);
+const emptyOrder: TOrderContext = {
+  items: [],
+  totalPrice: 0
+};
+
+const orderStore = writable<TOrderContext>(emptyOrder);
 
 export const getOrder = () => {
-  let currentOrder: TOrderContext | null = null;
+  let currentOrder: TOrderContext = emptyOrder;
   orderStore.subscribe((value) => {
     currentOrder = value;
   })();
@@ -13,7 +18,7 @@ export const getOrder = () => {
 };
 
 export const clearOrder = () => {
-  orderStore.set(null);
+  orderStore.set(emptyOrder);
 };
 
 export const addItemToOrder = (item: TItem) => {
@@ -39,7 +44,9 @@ export const addItemToOrder = (item: TItem) => {
 
 export const removeItemFromOrder = (itemId: string) => {
   orderStore.update((orderState) => {
-    if (!orderState) return null;
+    if (!orderState) {
+      return emptyOrder;
+    }
 
     const newItems = orderState.items.filter((item) => item.id !== itemId);
     const newTotalPrice = newItems.reduce(
