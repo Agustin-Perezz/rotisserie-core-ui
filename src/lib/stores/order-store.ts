@@ -1,44 +1,57 @@
+import { writable } from 'svelte/store';
 import type { TItem } from '$lib/types/item';
 import type { TOrderContext } from '$lib/types/order';
 
-let orderState = $state<TOrderContext | null>(null);
+const orderStore = writable<TOrderContext | null>(null);
 
-export const getOrder = () => orderState;
+export const getOrder = () => {
+  let currentOrder: TOrderContext | null = null;
+  orderStore.subscribe((value) => {
+    currentOrder = value;
+  })();
+  return currentOrder;
+};
 
 export const clearOrder = () => {
-  orderState = null;
+  orderStore.set(null);
 };
 
 export const addItemToOrder = (item: TItem) => {
-  if (!orderState) {
-    createOrder();
-  } else {
-    orderState.items.push(item);
-    orderState.totalPrice = orderState.items.reduce(
-      (total, item) => total + item.price,
-      0
-    );
-  }
-};
-
-export const removeItemFromOrder = (itemId: string) => {
-  if (orderState) {
-    const index = orderState.items.findIndex((item) => item.id === itemId);
-    if (index > -1) {
-      orderState.items.splice(index, 1);
-      orderState.totalPrice = orderState.items.reduce(
+  orderStore.update((orderState) => {
+    if (!orderState) {
+      return {
+        items: [item],
+        totalPrice: item.price
+      };
+    } else {
+      const newItems = [...orderState.items, item];
+      const newTotalPrice = newItems.reduce(
         (total, item) => total + item.price,
         0
       );
+      return {
+        items: newItems,
+        totalPrice: newTotalPrice
+      };
     }
-  }
+  });
 };
 
-const createOrder = () => {
-  const newOrder: TOrderContext = {
-    items: [],
-    totalPrice: 0
-  };
+export const removeItemFromOrder = (itemId: string) => {
+  orderStore.update((orderState) => {
+    if (!orderState) return null;
 
-  orderState = newOrder;
+    const newItems = orderState.items.filter((item) => item.id !== itemId);
+    const newTotalPrice = newItems.reduce(
+      (total, item) => total + item.price,
+      0
+    );
+
+    return {
+      items: newItems,
+      totalPrice: newTotalPrice
+    };
+  });
 };
+
+export { orderStore };
