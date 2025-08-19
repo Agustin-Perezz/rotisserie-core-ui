@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 import type { TItem } from '$lib/types/item';
 import type { TOrderContext } from '$lib/types/order';
+import { calculateTotalPrice } from '$lib/utils';
 
 const emptyOrder: TOrderContext = {
   items: [],
@@ -30,10 +31,7 @@ export const addItemToOrder = (item: TItem) => {
       };
     } else {
       const newItems = [...orderState.items, item];
-      const newTotalPrice = newItems.reduce(
-        (total, item) => total + item.price,
-        0
-      );
+      const newTotalPrice = calculateTotalPrice(newItems);
       return {
         items: newItems,
         totalPrice: newTotalPrice
@@ -49,10 +47,7 @@ export const removeItemFromOrder = (itemId: string) => {
     }
 
     const newItems = orderState.items.filter((item) => item.id !== itemId);
-    const newTotalPrice = newItems.reduce(
-      (total, item) => total + item.price,
-      0
-    );
+    const newTotalPrice = calculateTotalPrice(newItems);
 
     return {
       items: newItems,

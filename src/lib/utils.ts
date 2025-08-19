@@ -1,8 +1,13 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
+import type { TItem } from './types/item';
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
+}
+
+export function calculateTotalPrice(items: TItem[]): number {
+  return items.reduce((total, item) => total + item.price, 0);
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
