@@ -1,6 +1,7 @@
 <script lang="ts">
   import { page } from '$app/state';
   import CardItem from '$lib/components/shop/CardItem.svelte';
+  import CartOrder from './components/CartOrder.svelte';
   import type { TItem } from '$lib/types/item';
 
   const mockItems: TItem[] = [
@@ -74,9 +75,12 @@
 </script>
 
 <div class="container mx-auto p-4 sm:p-6">
-  <h1 class="mb-4 text-2xl font-bold sm:mb-6 sm:text-3xl">
-    Shop: {page.params.shopName}
-  </h1>
+  <div class="mb-6 flex items-center justify-between">
+    <h1 class="text-2xl font-bold sm:text-3xl">
+      Shop: {page.params.shopName}
+    </h1>
+    <CartOrder />
+  </div>
 
   <div class="mb-6">
     <h2 class="mb-3 text-lg font-semibold text-gray-800 sm:mb-4 sm:text-xl">
