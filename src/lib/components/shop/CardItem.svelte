@@ -3,11 +3,7 @@
   import { addItemToOrder } from '$lib/stores/order-store';
   import type { TItem } from '$lib/types/item';
 
-  type Props = {
-    item: TItem;
-  };
-
-  const { item }: Props = $props();
+  export let item: TItem;
 </script>
 
 <Card.Root
