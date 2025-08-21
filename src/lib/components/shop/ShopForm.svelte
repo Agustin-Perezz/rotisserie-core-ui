@@ -44,13 +44,10 @@
 </script>
 
 <form use:form>
-  {#each shopInputData as { name, type, label, placeholder } (name)}
+  {#each shopInputData as input (input.name)}
     <InputField
-      {name}
-      {label}
-      {type}
-      {placeholder}
-      error={$errors[name as keyof typeof $errors]?.[0] || ''}
+      {...input}
+      error={$errors[input.name as keyof typeof $errors]?.[0] || ''}
     />
   {/each}
 
