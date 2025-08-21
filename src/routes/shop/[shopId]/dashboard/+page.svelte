@@ -1,6 +1,6 @@
 <script lang="ts">
   import ShopTable from './components/ShopTable.svelte';
-  import { getItems } from '$lib/services/item';
+  import { getItemsByShopId } from '$lib/services/item';
   import { page } from '$app/state';
   import { useFetch } from '$lib/hooks/useFetch';
   import { createColumns } from './shop-columns';
@@ -10,7 +10,7 @@
     loading,
     error,
     run: refetchItems
-  } = useFetch(() => getItems(page.params.shopId), true);
+  } = useFetch(() => getItemsByShopId(page.params.shopId), true);
 
   const columns = createColumns(refetchItems);
 </script>
