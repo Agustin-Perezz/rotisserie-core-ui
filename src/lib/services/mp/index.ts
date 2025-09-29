@@ -15,7 +15,6 @@ export const mpLogin = async (sellerId: string): Promise<TMpLoginResponse> => {
 export const processPayment = async (
   paymentData: TMpPaymentRequest
 ): Promise<TMpPaymentResponse> => {
-  console.log(paymentData);
   const response = await api.post<TMpPaymentResponse>('/mp/process_payment', {
     ...paymentData,
     ownerId: '7jgY7UTPMDbtJVhn5IoYzdHAVOD2'
