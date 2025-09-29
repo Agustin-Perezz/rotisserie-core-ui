@@ -30,7 +30,7 @@ export function useCheckoutBrick() {
   const createPaymentBrick = async (
     containerId: string,
     amount: number,
-    preferenceId?: string
+    preferenceId: string
   ) => {
     await initializeMp();
 
@@ -44,8 +44,7 @@ export function useCheckoutBrick() {
       mpInstance.bricks().create('payment', containerId, {
         initialization: {
           amount,
-          preferenceId:
-            preferenceId || '1082135315-c3498386-bc3a-4658-9564-54ae6b0a0187',
+          preferenceId,
           marketplace: true
         },
         customization: {
