@@ -10,6 +10,7 @@ export function useCheckoutBrick() {
   const isLoading = writable(false);
 
   const initializeMp = async (sellerPublicKey: string): Promise<void> => {
+    isLoading.set(true);
     if (get(mp)) {
       return;
     }
@@ -23,7 +24,7 @@ export function useCheckoutBrick() {
         }
       );
       mp.set(mercadoPagoInstance);
-      isLoading.set(true);
+      isLoading.set(false);
     } catch (error) {
       throw new Error('Failed to load MercadoPago SDK');
     }
