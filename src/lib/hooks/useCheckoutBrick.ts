@@ -9,17 +9,19 @@ export function useCheckoutBrick() {
   const mp = writable<any>(null);
   const isLoading = writable(false);
 
-  const initializeMp = async (): Promise<void> => {
+  const initializeMp = async (sellerPublicKey: string): Promise<void> => {
     if (get(mp)) {
       return;
     }
 
     try {
       await loadMercadoPago();
-      const publicKey = import.meta.env.VITE_MP_PUBLIC_KEY;
-      const mercadoPagoInstance = new (window as any).MercadoPago(publicKey, {
-        locale: 'es-AR'
-      });
+      const mercadoPagoInstance = new (window as any).MercadoPago(
+        sellerPublicKey,
+        {
+          locale: 'es-AR'
+        }
+      );
       mp.set(mercadoPagoInstance);
       isLoading.set(true);
     } catch (error) {
@@ -29,10 +31,11 @@ export function useCheckoutBrick() {
 
   const createPaymentBrick = async (
     containerId: string,
-    amount: number,
-    preferenceId: string
+    preferenceId: string,
+    sellerPublicKey: string,
+    amount: number
   ) => {
-    await initializeMp();
+    await initializeMp(sellerPublicKey);
 
     return new Promise<void>((resolve, reject) => {
       const mpInstance = get(mp);
