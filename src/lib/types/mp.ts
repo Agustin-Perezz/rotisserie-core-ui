@@ -41,3 +41,12 @@ export type TMpPaymentResponse = {
   detail?: string;
   status_detail?: string;
 };
+
+export type TMpPreferenceRequest = {
+  ownerId: string;
+  orderId: string;
+};
+
+export type TMpPreferenceResponse = {
+  preferenceId: string;
+};

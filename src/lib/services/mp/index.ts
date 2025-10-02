@@ -2,7 +2,9 @@ import api from '$lib/axios';
 import type {
   TMpLoginResponse,
   TMpPaymentRequest,
-  TMpPaymentResponse
+  TMpPaymentResponse,
+  TMpPreferenceRequest,
+  TMpPreferenceResponse
 } from '$lib/types/mp';
 
 export const mpLogin = async (sellerId: string): Promise<TMpLoginResponse> => {
@@ -19,5 +21,15 @@ export const processPayment = async (
     ...paymentData,
     ownerId: '7jgY7UTPMDbtJVhn5IoYzdHAVOD2'
   });
+  return response.data;
+};
+
+export const createPreference = async (
+  preferenceData: TMpPreferenceRequest
+): Promise<TMpPreferenceResponse> => {
+  const response = await api.post<TMpPreferenceResponse>(
+    '/mp/preference',
+    preferenceData
+  );
   return response.data;
 };
