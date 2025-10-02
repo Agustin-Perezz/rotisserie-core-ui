@@ -5,6 +5,9 @@
   import OrderCosts from './OrderCosts.svelte';
   import { useOrder } from '$lib/hooks/useOrder.js';
 
+  export let shopId: string;
+  export let ownerId: string;
+
   const {
     order,
     showPayment,
@@ -13,7 +16,7 @@
     getSubtotal,
     getTotal,
     confirmOrder
-  } = useOrder();
+  } = useOrder(shopId, ownerId);
 </script>
 
 <Dialog.Root>

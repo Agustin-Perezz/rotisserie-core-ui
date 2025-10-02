@@ -7,9 +7,12 @@ import {
 import { createOrder } from '$lib/services/order';
 import type { TOrderContext } from '$lib/types/order';
 
-export const useOrder = () => {
+export const useOrder = (shopId: string, ownerId: string) => {
   const showPayment = writable(false);
   const shippingFee = writable(0);
+
+  console.log('shopId', shopId);
+  console.log('ownerId', ownerId);
 
   //const { createPaymentBrick } = useCheckoutBrick();
 
@@ -31,7 +34,7 @@ export const useOrder = () => {
 
   const confirmOrder = async (orderData: TOrderContext) => {
     await createOrder({
-      shopId: orderData.items[0].shopId,
+      shopId,
       orderItems: orderData.items
     });
 
