@@ -16,9 +16,14 @@ export type TCreateOrderDto = {
   totalPrice: number;
 };
 
+export type TCreateOrderRequest = {
+  shopId: string;
+  orderItems: TOrderItemContext[];
+};
+
 export type TOrderItemContext = Pick<
   TItem,
-  'id' | 'name' | 'price' | 'image' | 'description'
+  'id' | 'name' | 'price' | 'image' | 'description' | 'shopId'
 > & {
   quantity: number;
 };
