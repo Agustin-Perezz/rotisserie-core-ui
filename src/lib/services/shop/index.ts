@@ -7,3 +7,8 @@ export const createShop = async (shopData: TShopFormData): Promise<TShop> => {
   successToast('Negocio creado exitosamente!');
   return response.data;
 };
+
+export const getShopByName = async (shopName: string): Promise<TShop> => {
+  const response = await api.get<TShop>(`/shops/name/${shopName}`);
+  return response.data;
+};
