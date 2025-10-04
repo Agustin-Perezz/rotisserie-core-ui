@@ -6,6 +6,7 @@ import {
 } from '$lib/stores/order-store.js';
 import { createOrder } from '$lib/services/order';
 import type { TOrderContext } from '$lib/types/order';
+import { createPreference } from '$lib/services/mp';
 
 export const useOrder = (shopId: string, ownerId: string) => {
   const showPayment = writable(false);
@@ -33,9 +34,14 @@ export const useOrder = (shopId: string, ownerId: string) => {
   };
 
   const confirmOrder = async (orderData: TOrderContext) => {
-    await createOrder({
+    const { id: orderId } = await createOrder({
       shopId,
       orderItems: orderData.items
+    });
+
+    await createPreference({
+      ownerId,
+      orderId
     });
 
     showPayment.set(true);
