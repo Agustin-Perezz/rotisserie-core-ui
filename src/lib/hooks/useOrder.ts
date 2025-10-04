@@ -13,9 +13,6 @@ export const useOrder = (shopId: string, ownerId: string) => {
   const showPayment = writable(false);
   const shippingFee = writable(0);
 
-  console.log('shopId', shopId);
-  console.log('ownerId', ownerId);
-
   const { createPaymentBrick } = useCheckoutBrick();
 
   const getSubtotal = (orderData: TOrderContext) => {
