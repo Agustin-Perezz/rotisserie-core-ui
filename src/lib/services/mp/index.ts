@@ -4,7 +4,8 @@ import type {
   TMpPaymentRequest,
   TMpPaymentResponse,
   TMpPreferenceRequest,
-  TMpPreferenceResponse
+  TMpPreferenceResponse,
+  TMpPublicKeyResponse
 } from '$lib/types/mp';
 
 export const mpLogin = async (sellerId: string): Promise<TMpLoginResponse> => {
@@ -30,6 +31,15 @@ export const createPreference = async (
   const response = await api.post<TMpPreferenceResponse>(
     '/mp/preference',
     preferenceData
+  );
+  return response.data;
+};
+
+export const getSellerPublicKey = async (
+  ownerId: string
+): Promise<TMpPublicKeyResponse> => {
+  const response = await api.get<TMpPublicKeyResponse>(
+    `/mp/public-key/${ownerId}`
   );
   return response.data;
 };

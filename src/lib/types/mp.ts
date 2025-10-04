@@ -50,3 +50,7 @@ export type TMpPreferenceRequest = {
 export type TMpPreferenceResponse = {
   preferenceId: string;
 };
+
+export type TMpPublicKeyResponse = {
+  publicKey: string;
+};
