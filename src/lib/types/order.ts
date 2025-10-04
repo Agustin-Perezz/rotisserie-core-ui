@@ -1,9 +1,10 @@
 import type { TItem } from './item';
+import type { TShop } from './shop';
 
 export enum TOrderStatus {
-  PENDING = 'pending',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled'
+  PENDING = 'PENDING',
+  COMPLETED = 'COMPLETED',
+  CANCELLED = 'CANCELLED'
 }
 
 export type TOrderItem = {
@@ -31,4 +32,22 @@ export type TOrderItemContext = Pick<
 export type TOrderContext = {
   items: TOrderItemContext[];
   totalPrice: number;
+};
+
+export type TOrderItemResponse = {
+  id: string;
+  itemId: string;
+  orderId: string;
+  quantity: number;
+  item: TItem;
+};
+
+export type TOrderResponse = {
+  id: string;
+  shopId: string;
+  status: TOrderStatus;
+  createdAt: string;
+  deletedAt: string | null;
+  orderItems: TOrderItemResponse[];
+  shop: TShop;
 };
