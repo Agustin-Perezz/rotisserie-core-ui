@@ -6,7 +6,8 @@ import {
 } from '$lib/stores/order-store.js';
 import { createOrder } from '$lib/services/order';
 import type { TOrderContext } from '$lib/types/order';
-import { createPreference } from '$lib/services/mp';
+import { createPreference, getSellerPublicKey } from '$lib/services/mp';
+import { useCheckoutBrick } from './useCheckoutBrick';
 
 export const useOrder = (shopId: string, ownerId: string) => {
   const showPayment = writable(false);
@@ -15,7 +16,7 @@ export const useOrder = (shopId: string, ownerId: string) => {
   console.log('shopId', shopId);
   console.log('ownerId', ownerId);
 
-  //const { createPaymentBrick } = useCheckoutBrick();
+  const { createPaymentBrick } = useCheckoutBrick();
 
   const getSubtotal = (orderData: TOrderContext) => {
     return orderData?.totalPrice ?? 0;
@@ -33,30 +34,27 @@ export const useOrder = (shopId: string, ownerId: string) => {
     }
   };
 
-  const confirmOrder = async (orderData: TOrderContext) => {
+  const handleConfirmOrder = async (orderData: TOrderContext) => {
     const { id: orderId } = await createOrder({
       shopId,
       orderItems: orderData.items
     });
 
-    await createPreference({
+    const { preferenceId } = await createPreference({
       ownerId,
       orderId
     });
 
+    const { publicKey } = await getSellerPublicKey(ownerId);
+
     showPayment.set(true);
 
-    setTimeout(() => {
-      //initializePaymentBrick(orderData);
-    }, 50);
-  };
-
-  const initializePaymentBrick = async () => {
-    try {
-      //await createPaymentBrick('paymentBrick_container', getTotal(orderData, 0));
-    } catch (error) {
-      console.error('Failed to initialize payment brick:', error);
-    }
+    await createPaymentBrick(
+      'paymentBrick_container',
+      preferenceId,
+      publicKey,
+      getTotal(orderData, 0)
+    );
   };
 
   return {
@@ -67,7 +65,6 @@ export const useOrder = (shopId: string, ownerId: string) => {
     handleQuantityChange,
     getSubtotal,
     getTotal,
-    confirmOrder,
-    initializePaymentBrick
+    handleConfirmOrder
   };
 };

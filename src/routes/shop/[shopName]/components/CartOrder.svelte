@@ -15,7 +15,7 @@
     handleQuantityChange,
     getSubtotal,
     getTotal,
-    confirmOrder
+    handleConfirmOrder
   } = useOrder(shopId, ownerId);
 </script>
 
@@ -69,7 +69,7 @@
       {:else}
         <Button
           class="w-full rounded-lg bg-blue-600 py-3 font-bold text-white hover:bg-blue-700"
-          onclick={() => confirmOrder($order)}
+          onclick={() => handleConfirmOrder($order)}
           disabled={!$order || $order.items.length === 0}
         >
           Confirm Order
