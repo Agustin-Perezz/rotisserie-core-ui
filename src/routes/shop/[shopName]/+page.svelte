@@ -30,7 +30,7 @@
       Our Menu
     </h2>
     <CartOrder shopId={$shop.id} ownerId={$shop.ownerId} />
-    <div class="grid grid-cols-1 gap-4 sm:gap-6 md:grid-cols-2 lg:grid-cols-3">
+    <div class="mx-2 grid grid-cols-2 gap-4 sm:gap-6">
       {#each $shop.items as item (item.id)}
         <CardItem {item} />
       {/each}
