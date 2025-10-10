@@ -1,6 +1,7 @@
 import {
   getAuth,
   signInWithPopup,
+  signOut as firebaseSignOut,
   GoogleAuthProvider,
   FacebookAuthProvider,
   type AuthError,
@@ -66,5 +67,15 @@ export const getAccessToken = async (): Promise<string | null> => {
     const firebaseError = error as AuthError;
     errorToast(firebaseError.message);
     return null;
+  }
+};
+
+export const signOut = async (): Promise<void> => {
+  try {
+    await firebaseSignOut(auth);
+    successToast('Sesión cerrada exitosamente');
+  } catch (error) {
+    const firebaseError = error as AuthError;
+    errorToast(firebaseError.message);
   }
 };
