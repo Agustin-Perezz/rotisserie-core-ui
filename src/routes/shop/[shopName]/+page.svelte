@@ -26,11 +26,13 @@
 
 {#if $shop?.items}
   <div class="mb-6">
-    <h2 class="mb-3 text-lg font-semibold text-gray-800 sm:mb-4 sm:text-xl">
-      Our Menu
-    </h2>
     <CartOrder shopId={$shop.id} ownerId={$shop.ownerId} />
-    <div class="mx-2 grid grid-cols-2 gap-4 sm:gap-6">
+    <div class="mb-3 flex items-center justify-between px-4 sm:mb-4">
+      <h2 class="mt-6 text-lg font-semibold text-gray-800 sm:text-xl">
+        Nuestro Menu
+      </h2>
+    </div>
+    <div class="mx-2 mt-6 grid grid-cols-2 gap-4 sm:gap-6">
       {#each $shop.items as item (item.id)}
         <CardItem {item} />
       {/each}

@@ -29,7 +29,7 @@
   };
 </script>
 
-<Card.Root class="m-2 w-full max-w-4xl shadow-md" data-testid="shop-table">
+<Card.Root class="w-full max-w-4xl shadow-md" data-testid="shop-table">
   <Table.Root>
     <Table.Header>
       <Table.Row class="bg-muted/50">
