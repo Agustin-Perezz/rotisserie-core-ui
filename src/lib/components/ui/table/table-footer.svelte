@@ -1,23 +1,23 @@
 <script lang="ts">
   import { cn, type WithElementRef } from '$lib/utils.js';
-  import type { HTMLTdAttributes } from 'svelte/elements';
+  import type { HTMLAttributes } from 'svelte/elements';
 
   let {
     ref = $bindable(null),
     class: className,
     children,
     ...restProps
-  }: WithElementRef<HTMLTdAttributes> = $props();
+  }: WithElementRef<HTMLAttributes<HTMLTableSectionElement>> = $props();
 </script>
 
-<td
+<tfoot
   bind:this={ref}
-  data-slot="table-cell"
+  data-slot="table-footer"
   class={cn(
-    'p-2 align-middle whitespace-nowrap [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]',
+    'bg-muted/50 border-t font-medium [&>tr]:last:border-b-0',
     className
   )}
   {...restProps}
 >
   {@render children?.()}
-</td>
+</tfoot>

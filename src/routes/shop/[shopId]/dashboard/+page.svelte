@@ -3,7 +3,6 @@
   import { getItemsByShopId } from '$lib/services/item';
   import { page } from '$app/state';
   import { useFetch } from '$lib/hooks/useFetch';
-  import { createColumns } from './shop-columns';
 
   const {
     data: items,
@@ -11,8 +10,6 @@
     error,
     run: refetchItems
   } = useFetch(() => getItemsByShopId(page.params.shopId), true);
-
-  const columns = createColumns(refetchItems);
 </script>
 
 {#if $loading}
@@ -23,6 +20,6 @@
   </div>
 {:else if $items}
   <div class="m-0 flex h-screen items-center justify-center">
-    <ShopTable data={$items} {columns} />
+    <ShopTable data={$items} {refetchItems} />
   </div>
 {/if}

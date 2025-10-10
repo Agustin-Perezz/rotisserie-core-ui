@@ -1,64 +1,83 @@
-<script lang="ts" generics="TData, TValue">
-  import { type ColumnDef, getCoreRowModel } from '@tanstack/table-core';
-  import {
-    createSvelteTable,
-    FlexRender
-  } from '$lib/components/ui/data-table/index.js';
+<script lang="ts">
   import * as Table from '$lib/components/ui/table/index.js';
+  import * as Card from '$lib/components/ui/card/index.js';
+  import { Button } from '$lib/components/ui/button/index.js';
+  import type { IItemTable } from '$lib/types/item';
+  import { deleteItem } from '$lib/services/item';
+  import { goto } from '$app/navigation';
+  import { base } from '$app/paths';
+  import { page } from '$app/state';
+  import { currentItemId } from '$lib/stores/item-store';
 
-  type DataTableProps<TData, TValue> = {
-    columns: ColumnDef<TData, TValue>[];
-    data: TData[];
+  type ShopTableProps = {
+    data: IItemTable[];
+    refetchItems?: () => void;
   };
 
-  let { data, columns }: DataTableProps<TData, TValue> = $props();
+  let { data, refetchItems }: ShopTableProps = $props();
 
-  const table = createSvelteTable({
-    get data() {
-      return data;
-    },
-    columns,
-    getCoreRowModel: getCoreRowModel()
-  });
+  const handleEdit = (id: string) => {
+    currentItemId.set(id);
+    goto(`${base}/shop/${page.params.shopId}/dashboard/edit-item`);
+  };
+
+  const handleDelete = async (id: string) => {
+    await deleteItem(id);
+    if (refetchItems) {
+      refetchItems();
+    }
+  };
 </script>
 
-<div class="m-4 min-w-48 rounded border p-2" data-testid="shop-table">
+<Card.Root class="m-2 w-full max-w-4xl shadow-md" data-testid="shop-table">
   <Table.Root>
     <Table.Header>
-      {#each table.getHeaderGroups() as headerGroup (headerGroup.id)}
-        <Table.Row>
-          {#each headerGroup.headers as header (header.id)}
-            <Table.Head colspan={header.colSpan}>
-              {#if !header.isPlaceholder}
-                <FlexRender
-                  content={header.column.columnDef.header}
-                  context={header.getContext()}
-                />
-              {/if}
-            </Table.Head>
-          {/each}
-        </Table.Row>
-      {/each}
+      <Table.Row class="bg-muted/50">
+        <Table.Head class="font-semibold">Nombre</Table.Head>
+        <Table.Head class="hidden font-semibold md:table-cell"
+          >Descripción</Table.Head
+        >
+        <Table.Head class="font-semibold">Precio</Table.Head>
+        <Table.Head class="text-right font-semibold">Acciones</Table.Head>
+      </Table.Row>
     </Table.Header>
     <Table.Body>
-      {#each table.getRowModel().rows as row (row.id)}
-        <Table.Row data-state={row.getIsSelected() && 'selected'}>
-          {#each row.getVisibleCells() as cell (cell.id)}
-            <Table.Cell>
-              <FlexRender
-                content={cell.column.columnDef.cell}
-                context={cell.getContext()}
-              />
-            </Table.Cell>
-          {/each}
+      {#each data as item (item.id)}
+        <Table.Row class="hover:bg-muted/30">
+          <Table.Cell class="max-w-[150px] truncate md:max-w-none"
+            >{item.name}</Table.Cell
+          >
+          <Table.Cell class="text-muted-foreground hidden md:table-cell"
+            >{item.description ?? '-'}</Table.Cell
+          >
+          <Table.Cell class="font-medium">${item.price.toFixed(2)}</Table.Cell>
+          <Table.Cell class="text-right">
+            <div class="flex items-center justify-end gap-1 md:gap-2">
+              <Button
+                variant="outline"
+                size="sm"
+                onclick={() => handleEdit(item.id)}
+              >
+                Editar
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onclick={() => handleDelete(item.id)}
+                class="text-destructive hover:text-destructive"
+              >
+                Eliminar
+              </Button>
+            </div>
+          </Table.Cell>
         </Table.Row>
       {:else}
         <Table.Row>
-          <Table.Cell colspan={columns.length} class="h-24 text-center">
-            No results.
+          <Table.Cell colspan={4} class="h-24 text-center">
+            No hay resultados.
           </Table.Cell>
         </Table.Row>
       {/each}
     </Table.Body>
   </Table.Root>
-</div>
+</Card.Root>
