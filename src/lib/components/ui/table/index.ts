@@ -4,6 +4,8 @@ import Cell from './table-cell.svelte';
 import Head from './table-head.svelte';
 import Header from './table-header.svelte';
 import Row from './table-row.svelte';
+import Footer from './table-footer.svelte';
+import Caption from './table-caption.svelte';
 
 export {
   Root,
@@ -12,10 +14,14 @@ export {
   Head,
   Header,
   Row,
+  Footer,
+  Caption,
   Root as Table,
   Body as TableBody,
   Cell as TableCell,
   Head as TableHead,
   Header as TableHeader,
-  Row as TableRow
+  Row as TableRow,
+  Footer as TableFooter,
+  Caption as TableCaption
 };

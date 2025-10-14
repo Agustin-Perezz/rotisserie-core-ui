@@ -1,9 +1,8 @@
 <script lang="ts">
-  import ShopTable from './components/ShopTable.svelte';
+  import ShopDashboard from './components/ShopDashboard.svelte';
   import { getItemsByShopId } from '$lib/services/item';
   import { page } from '$app/state';
   import { useFetch } from '$lib/hooks/useFetch';
-  import { createColumns } from './shop-columns';
 
   const {
     data: items,
@@ -11,18 +10,16 @@
     error,
     run: refetchItems
   } = useFetch(() => getItemsByShopId(page.params.shopId), true);
-
-  const columns = createColumns(refetchItems);
 </script>
 
 {#if $loading}
-  <p>Loading...</p>
+  <div class="flex h-screen items-center justify-center">
+    <p>Cargando...</p>
+  </div>
 {:else if $error}
-  <div class="m-0 flex h-screen items-center justify-center">
-    <p>Error loading items: {$error.message}</p>
+  <div class="flex h-screen items-center justify-center">
+    <p class="text-destructive">Error al cargar productos: {$error.message}</p>
   </div>
 {:else if $items}
-  <div class="m-0 flex h-screen items-center justify-center">
-    <ShopTable data={$items} {columns} />
-  </div>
+  <ShopDashboard items={$items} {refetchItems} />
 {/if}

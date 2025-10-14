@@ -1,23 +1,23 @@
 <script lang="ts">
   import { cn, type WithElementRef } from '$lib/utils.js';
   import type { HTMLAttributes } from 'svelte/elements';
-  import type { Snippet } from 'svelte';
 
   let {
     ref = $bindable(null),
     class: className,
     children,
     ...restProps
-  }: WithElementRef<HTMLAttributes<HTMLDivElement>> & {
-    children?: Snippet;
-  } = $props();
+  }: WithElementRef<HTMLAttributes<HTMLTableSectionElement>> = $props();
 </script>
 
-<div
+<tfoot
   bind:this={ref}
-  data-slot="card-content"
-  class={cn('px-6', className)}
+  data-slot="table-footer"
+  class={cn(
+    'bg-muted/50 border-t font-medium [&>tr]:last:border-b-0',
+    className
+  )}
   {...restProps}
 >
   {@render children?.()}
-</div>
+</tfoot>
