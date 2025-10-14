@@ -1,5 +1,6 @@
 @import 'tailwindcss';
 @import 'tw-animate-css';
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Linear+B&display=swap');
 
 :root {
   --background: oklch(1 0 0);
@@ -38,7 +39,7 @@
 }
 
 @theme inline {
-  --font-sans: var(--font-geist-sans);
+  --font-sans: 'Noto Sans Linear B', sans-serif;
   --font-mono: var(--font-geist-mono);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -86,5 +87,12 @@
   body {
     background-color: var(--background);
     color: var(--foreground);
+    font-family: var(--font-sans);
   }
+}
+
+.noto-sans-linear-b-regular {
+  font-family: 'Noto Sans Linear B', sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
