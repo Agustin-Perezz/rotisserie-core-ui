@@ -20,10 +20,10 @@
   } = useOrder(shopId, ownerId);
 </script>
 
-<div class="fixed top-4 right-4 z-50">
+<div class="mt-6">
   <Dialog.Root>
     <Dialog.Trigger
-      class="relative rounded-full border border-gray-200 bg-white p-3 transition-all hover:shadow-xl"
+      class="relative rounded-full bg-gray-100 p-3 transition-all hover:shadow-xl"
     >
       <ShoppingCart class="h-6 w-6 text-gray-700" />
       {#if $order?.items.length > 0}
