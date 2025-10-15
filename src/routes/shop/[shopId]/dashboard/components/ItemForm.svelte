@@ -44,7 +44,7 @@
       name: initialValues?.name || '',
       description: initialValues?.description || '',
       price: initialValues?.price || 0,
-      image: initialValues?.image || '',
+      image: initialValues?.image,
       shopId: shopId
     },
     onSubmit: handleSubmit,
