@@ -27,7 +27,25 @@ export const getItemsByShopName = async (
 };
 
 export const createItem = async (data: TCreateItemFormData): Promise<TItem> => {
-  const response = await api.post<TItem>('/items', data);
+  const formData = new FormData();
+
+  formData.append('name', data.name);
+  formData.append('price', data.price.toString());
+  formData.append('shopId', data.shopId);
+
+  if (data.description) {
+    formData.append('description', data.description);
+  }
+
+  if (data.image) {
+    formData.append('image', data.image);
+  }
+
+  const response = await api.post<TItem>('/items', formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
   successToast('Item creado exitosamente!');
   return response.data;
 };
