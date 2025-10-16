@@ -1,12 +1,10 @@
 <script lang="ts">
   import { createItem } from '$lib/services/item';
-  import type { TCreateItemFormData } from '$lib/types/item';
   import ItemForm from '../components/ItemForm.svelte';
+  import type { TItemFormData } from '$lib/types/item';
 
-  const handleSubmit = async (values: TCreateItemFormData) => {
-    // Handle form submission logic here
+  const handleSubmit = async (values: TItemFormData) => {
     await createItem(values);
-    console.log('Form submitted with values:', values);
   };
 </script>
 

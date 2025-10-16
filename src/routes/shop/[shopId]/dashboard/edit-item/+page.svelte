@@ -1,16 +1,15 @@
 <script lang="ts">
   import { getItem, updateItem } from '$lib/services/item';
-  import type { TCreateItemFormData } from '$lib/types/item';
   import ItemForm from '../components/ItemForm.svelte';
   import { currentItemId } from '$lib/stores/item-store';
+  import type { TItemFormData } from '$lib/types/item';
 
   const getItemData = async () => {
     return await getItem($currentItemId);
   };
 
-  const handleSubmit = async (values: TCreateItemFormData) => {
+  const handleSubmit = async (values: TItemFormData) => {
     await updateItem(values);
-    console.log('Form submitted with values:', values);
   };
 </script>
 

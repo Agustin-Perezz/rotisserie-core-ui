@@ -13,10 +13,6 @@ export type IItemTable = Omit<
   'image' | 'createdAt' | 'updatedAt' | 'shopId'
 >;
 
-export type TCreateItemFormData = Omit<
-  TItem,
-  'createdAt' | 'updatedAt' | 'image'
-> & {
+export type TItemFormData = Omit<TItem, 'createdAt' | 'updatedAt' | 'image'> & {
   image?: File;
 };
-export type TUpdateItemFormData = Partial<TItem>;
