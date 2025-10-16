@@ -5,12 +5,12 @@
   import Button from '$lib/components/ui/button/button.svelte';
   import { createItemSchema } from '$lib/schemas/item.schema';
   import { page } from '$app/state';
-  import type { TCreateItemFormData } from '$lib/types/item';
+  import type { TItem, TItemFormData } from '$lib/types/item';
   import ImageField from '$lib/components/form/ImageField.svelte';
 
   type Props = {
-    handleSubmit: (values: TCreateItemFormData) => Promise<void>;
-    initialValues?: Partial<TCreateItemFormData>;
+    handleSubmit: (values: TItemFormData) => Promise<void>;
+    initialValues?: TItem;
   };
 
   const shopId = page.params.shopId;
@@ -38,13 +38,12 @@
     }
   ];
 
-  const { form, errors, isSubmitting } = createForm<TCreateItemFormData>({
+  const { form, errors, isSubmitting } = createForm<TItemFormData>({
     initialValues: {
       id: initialValues?.id || undefined,
       name: initialValues?.name || '',
       description: initialValues?.description || '',
       price: initialValues?.price || 0,
-      image: initialValues?.image,
       shopId: shopId
     },
     onSubmit: handleSubmit,

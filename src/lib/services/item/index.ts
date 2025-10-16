@@ -1,11 +1,7 @@
 import { successToast } from '$lib/alerts/toast';
 import api from '$lib/axios';
-import type {
-  TItem,
-  TCreateItemFormData,
-  TUpdateItemFormData,
-  IItemTable
-} from '$lib/types/item';
+import type { TItem, IItemTable, TItemFormData } from '$lib/types/item';
+import { objectToFormData } from '$lib/utils';
 
 export const getItem = async (id: string): Promise<TItem> => {
   const response = await api.get<TItem>(`/items/${id}`);
@@ -26,20 +22,8 @@ export const getItemsByShopName = async (
   return response.data;
 };
 
-export const createItem = async (data: TCreateItemFormData): Promise<TItem> => {
-  const formData = new FormData();
-
-  formData.append('name', data.name);
-  formData.append('price', data.price.toString());
-  formData.append('shopId', data.shopId);
-
-  if (data.description) {
-    formData.append('description', data.description);
-  }
-
-  if (data.image) {
-    formData.append('image', data.image);
-  }
+export const createItem = async (data: TItemFormData): Promise<TItem> => {
+  const formData = objectToFormData(data);
 
   const response = await api.post<TItem>('/items', formData, {
     headers: {
@@ -50,8 +34,13 @@ export const createItem = async (data: TCreateItemFormData): Promise<TItem> => {
   return response.data;
 };
 
-export const updateItem = async (data: TUpdateItemFormData): Promise<TItem> => {
-  const response = await api.patch<TItem>(`/items/${data.id}`, data);
+export const updateItem = async (data: TItemFormData): Promise<TItem> => {
+  const formData = objectToFormData(data);
+  const response = await api.patch<TItem>(`/items/${data.id}`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  });
   successToast('Item actualizado exitosamente!');
   return response.data;
 };
