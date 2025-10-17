@@ -1,9 +1,9 @@
 import api from '$lib/axios';
-import type { TCreateOrderRequest, TOrderResponse } from '$lib/types/order';
+import type { TCreateOrderRequest, TOrder } from '$lib/types/order';
 
 export const createOrder = async (
   data: TCreateOrderRequest
-): Promise<TOrderResponse> => {
+): Promise<TOrder> => {
   const orderData = {
     shopId: data.shopId,
     orderItems: data.orderItems.map((item) => ({
