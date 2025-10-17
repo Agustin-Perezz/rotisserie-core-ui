@@ -3,6 +3,8 @@ import type { TShop } from './shop';
 
 export enum TOrderStatus {
   PENDING = 'PENDING',
+  PREPARING = 'PREPARING',
+  READY = 'READY',
   COMPLETED = 'COMPLETED',
   CANCELLED = 'CANCELLED'
 }
@@ -42,7 +44,7 @@ export type TOrderItemResponse = {
   item: TItem;
 };
 
-export type TOrderResponse = {
+export type TOrder = {
   id: string;
   shopId: string;
   status: TOrderStatus;
