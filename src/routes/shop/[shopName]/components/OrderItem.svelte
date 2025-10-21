@@ -5,10 +5,10 @@
   export let onQuantityChange: (itemId: string, newQuantity: number) => void;
 </script>
 
-<div class="flex items-center gap-3">
-  <div class="relative">
+<div class="flex items-start gap-4">
+  <div class="relative flex-shrink-0">
     <div
-      class="flex h-12 w-12 items-center justify-center rounded-lg bg-gray-200"
+      class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-200"
     >
       {#if item.image}
         <img
@@ -27,7 +27,7 @@
     </div>
   </div>
 
-  <div class="max-w-[150px] min-w-0 flex-1">
+  <div class="min-w-0 flex-1">
     <div class="truncate text-sm font-medium text-gray-800">
       {item.name}
     </div>
