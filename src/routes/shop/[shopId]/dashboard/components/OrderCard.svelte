@@ -6,6 +6,7 @@
     CardContent
   } from '$lib/components/ui/card';
   import { TOrderStatus, type TOrder } from '$lib/types/order';
+  import OrderCardStatus from './OrderCardStatus.svelte';
 
   type OrderCardProps = {
     order: TOrder;
@@ -52,6 +53,8 @@
       <div class="text-muted-foreground text-xs">
         {new Date(order.createdAt).toLocaleString('es-ES')}
       </div>
+
+      <OrderCardStatus {order} />
     </div>
   </CardContent>
 </Card>
