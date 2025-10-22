@@ -5,8 +5,7 @@
   import type { IItemTable } from '$lib/types/item';
   import type { TOrder } from '$lib/types/order';
   import type { Readable } from 'svelte/store';
-  import { goto } from '$app/navigation';
-  import { base } from '$app/paths';
+  import { navigateToNewItem } from '$lib/utils/navigation';
   import { page } from '$app/state';
 
   type ShopDashboardProps = {
@@ -18,7 +17,7 @@
   let { items, refetchItems, orderSocket }: ShopDashboardProps = $props();
 
   const handleCreateItem = () => {
-    goto(`${base}/shop/${page.params.shopId}/dashboard/new-item`);
+    navigateToNewItem(page.params.shopId);
   };
 </script>
 
