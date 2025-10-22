@@ -1,12 +1,12 @@
 <script lang="ts">
   import { Button } from '$lib/components/ui/button/index.js';
-  import { goto } from '$app/navigation';
-  import { base } from '$app/paths';
+  import { navigateToLogin } from '$lib/utils/navigation';
   import { signOut } from '$lib/services/auth';
+  import ShopSettings from './ShopSettings.svelte';
 
   const handleLogout = async () => {
     await signOut();
-    goto(`${base}/login`);
+    navigateToLogin();
   };
 </script>
 
@@ -16,6 +16,9 @@
       <div class="bg-primary h-8 w-8 rounded-lg"></div>
       <span class="text-lg font-semibold">Rotisserie</span>
     </div>
-    <Button variant="outline" onclick={handleLogout}>Cerrar sesión</Button>
+    <div class="flex items-center gap-2">
+      <ShopSettings />
+      <Button variant="outline" onclick={handleLogout}>Cerrar sesión</Button>
+    </div>
   </div>
 </header>
