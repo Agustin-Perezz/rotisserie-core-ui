@@ -8,6 +8,11 @@ export const createShop = async (shopData: TShopFormData): Promise<TShop> => {
   return response.data;
 };
 
+export const getShopById = async (shopId: string): Promise<TShop> => {
+  const response = await api.get<TShop>(`/shops/${shopId}`);
+  return response.data;
+};
+
 export const getShopByName = async (shopName: string): Promise<TShop> => {
   const response = await api.get<TShop>(`/shops/name/${shopName}`);
   return response.data;
