@@ -1,7 +1,8 @@
 <script lang="ts">
   import ShopForm from '$lib/components/shop/ShopForm.svelte';
   import { createShop } from '$lib/services/shop';
-  import { navigateToShop } from '$lib/utils/navigation';
+  import { navigateToShops } from '$lib/utils/navigation';
+
   type Test = {
     name: string;
     description?: string;
@@ -9,8 +10,8 @@
   };
 
   const handleSubmit = async (values: Test) => {
-    const shop = await createShop(values);
-    navigateToShop(shop.id);
+    await createShop(values);
+    navigateToShops();
   };
 </script>
 

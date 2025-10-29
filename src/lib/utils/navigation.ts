@@ -17,6 +17,10 @@ export const navigateToLogin = () => {
   navigate('/login');
 };
 
+export const navigateToShops = () => {
+  navigate('/shops');
+};
+
 export const navigateToNewItem = (shopId: string) => {
   navigate(`/shop/${shopId}/dashboard/new-item`);
 };

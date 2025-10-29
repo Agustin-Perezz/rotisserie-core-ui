@@ -17,3 +17,8 @@ export const getShopByName = async (shopName: string): Promise<TShop> => {
   const response = await api.get<TShop>(`/shops/name/${shopName}`);
   return response.data;
 };
+
+export const getShopsByOwner = async (ownerId: string): Promise<TShop[]> => {
+  const response = await api.get<TShop[]>(`/shops/owner/${ownerId}`);
+  return response.data;
+};
