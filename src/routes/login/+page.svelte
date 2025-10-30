@@ -1,9 +1,5 @@
 <script lang="ts">
-  import {
-    getAccessToken,
-    signInWithFacebook,
-    signInWithGoogle
-  } from '$lib/services/auth';
+  import { signInWithFacebook, signInWithGoogle } from '$lib/services/auth';
   import {
     Card,
     CardHeader,
@@ -12,15 +8,16 @@
     CardContent
   } from '$lib/components/ui/card';
   import { Button } from '$lib/components/ui/button';
+  import { navigateToShops } from '$lib/utils/navigation';
 
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
-    const token = await getAccessToken();
-    console.log('Google Access Token:', token);
+    navigateToShops();
   };
 
   const handleFacebookSignIn = async () => {
     await signInWithFacebook();
+    navigateToShops();
   };
 </script>
 

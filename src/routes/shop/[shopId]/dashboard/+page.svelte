@@ -1,22 +1,30 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import ShopDashboard from './components/ShopDashboard.svelte';
-  import { getItemsByShopId } from '$lib/services/item';
+  import { getShopById } from '$lib/services/shop';
   import { page } from '$app/state';
   import { useFetch } from '$lib/hooks/useFetch';
   import { createOrderSocket } from '$lib/stores/orderSocket';
+  import { shopStore } from '$lib/stores/shop-store';
 
   const {
-    data: items,
+    data: shopData,
     loading,
     error,
-    run: refetchItems
-  } = useFetch(() => getItemsByShopId(page.params.shopId), true);
+    run: refetchShop
+  } = useFetch(() => getShopById(page.params.shopId), true);
 
   const orderSocket = createOrderSocket(page.params.shopId);
 
-  onMount(() => orderSocket.connect());
+  onMount(() => {
+    orderSocket.connect();
+  });
+
   onDestroy(() => orderSocket.disconnect());
+
+  $: if ($shopData) {
+    shopStore.setShop($shopData);
+  }
 </script>
 
 {#if $loading}
@@ -25,8 +33,8 @@
   </div>
 {:else if $error}
   <div class="flex h-screen items-center justify-center">
-    <p class="text-destructive">Error al cargar productos: {$error.message}</p>
+    <p class="text-destructive">Error al cargar tienda: {$error.message}</p>
   </div>
-{:else if $items}
-  <ShopDashboard items={$items} {refetchItems} {orderSocket} />
+{:else if $shopData}
+  <ShopDashboard shop={$shopData} {refetchShop} {orderSocket} />
 {/if}

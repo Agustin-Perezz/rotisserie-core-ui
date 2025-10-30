@@ -2,23 +2,22 @@
   import ShopTable from './ShopTable.svelte';
   import ShopOrders from './ShopOrders.svelte';
   import { Button } from '$lib/components/ui/button/index.js';
-  import type { IItemTable } from '$lib/types/item';
+  import type { TShop } from '$lib/types/shop';
   import type { TOrder } from '$lib/types/order';
   import type { Readable } from 'svelte/store';
-  import { goto } from '$app/navigation';
-  import { base } from '$app/paths';
+  import { navigateToNewItem } from '$lib/utils/navigation';
   import { page } from '$app/state';
 
   type ShopDashboardProps = {
-    items: IItemTable[];
-    refetchItems?: () => void;
+    shop: TShop;
+    refetchShop?: () => void;
     orderSocket: Readable<{ connected: boolean; orders: TOrder[] }>;
   };
 
-  let { items, refetchItems, orderSocket }: ShopDashboardProps = $props();
+  let { shop, refetchShop, orderSocket }: ShopDashboardProps = $props();
 
   const handleCreateItem = () => {
-    goto(`${base}/shop/${page.params.shopId}/dashboard/new-item`);
+    navigateToNewItem(page.params.shopId);
   };
 </script>
 
@@ -45,7 +44,7 @@
           </div>
           <Button onclick={handleCreateItem}>Crear Producto</Button>
         </div>
-        <ShopTable data={items} {refetchItems} />
+        <ShopTable data={shop.items || []} refetchItems={refetchShop} />
       </div>
     </div>
   </main>
