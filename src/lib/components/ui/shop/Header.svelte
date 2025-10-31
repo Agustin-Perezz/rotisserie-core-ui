@@ -1,9 +1,14 @@
 <script lang="ts ">
   import { Button } from '$lib/components/ui/button/index.js';
-  import { navigateToLogin } from '$lib/utils/navigation';
+  import {
+    navigateToLogin,
+    navigateToLoginWithRedirect
+  } from '$lib/utils/navigation';
   import { signOut } from '$lib/services/auth';
   import ShopSettings from './ShopSettings.svelte';
   import { currentShop } from '$lib/stores/shop-store';
+  import { isAuthenticated } from '$lib/stores/auth-store';
+  import { page } from '$app/state';
 
   const handleLogout = async () => {
     await signOut();
@@ -25,7 +30,15 @@
       {#if $currentShop}
         <ShopSettings />
       {/if}
-      <Button variant="outline" onclick={handleLogout}>Cerrar sesión</Button>
+      {#if $isAuthenticated}
+        <Button variant="outline" onclick={handleLogout}>Cerrar sesión</Button>
+      {:else}
+        <Button
+          variant="outline"
+          onclick={() => navigateToLoginWithRedirect(page.url.pathname)}
+          >Iniciar sesión</Button
+        >
+      {/if}
     </div>
   </div>
 </header>

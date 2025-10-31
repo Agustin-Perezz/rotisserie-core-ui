@@ -17,6 +17,25 @@ export const navigateToLogin = () => {
   navigate('/login');
 };
 
+export const navigateToLoginWithRedirect = (redirectPath: string) => {
+  const encoded = encodeURIComponent(redirectPath);
+  goto(`${base}/login?redirect=${encoded}`);
+};
+
+export const handlePostLoginRedirect = (
+  searchParams: URLSearchParams,
+  fallbackPath: string = '/shops'
+) => {
+  const redirect = searchParams.get('redirect');
+
+  if (redirect) {
+    goto(redirect);
+    return;
+  }
+
+  navigate(fallbackPath);
+};
+
 export const navigateToShops = () => {
   navigate('/shops');
 };
