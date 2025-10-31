@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { onMount } from 'svelte';
   import { signInWithFacebook, signInWithGoogle } from '$lib/services/auth';
   import {
     Card,
@@ -10,6 +11,7 @@
   import { Button } from '$lib/components/ui/button';
   import { handlePostLoginRedirect } from '$lib/utils/navigation';
   import { page } from '$app/state';
+  import { isAuthenticated, isAuthLoading } from '$lib/stores/auth-store';
 
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
@@ -20,6 +22,16 @@
     await signInWithFacebook();
     handlePostLoginRedirect(page.url.searchParams);
   };
+
+  onMount(() => {
+    const unsubscribe = isAuthLoading.subscribe((loading) => {
+      if (!loading && $isAuthenticated) {
+        handlePostLoginRedirect(page.url.searchParams);
+      }
+    });
+
+    return unsubscribe;
+  });
 </script>
 
 <div class="flex min-h-screen items-center justify-center p-4">

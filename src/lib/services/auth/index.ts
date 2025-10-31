@@ -1,5 +1,4 @@
 import {
-  getAuth,
   signInWithPopup,
   signOut as firebaseSignOut,
   GoogleAuthProvider,
@@ -7,14 +6,12 @@ import {
   type AuthError,
   type UserCredential
 } from 'firebase/auth';
-import { firebaseApp } from '$lib/firebase';
 import { errorToast, successToast } from '$lib/alerts/toast';
 import {
   CREDENTIALS_NOT_FOUND,
   SUCCESS_SIGN_IN_MESSAGE
 } from '../constanst/auth.constants';
-
-const auth = getAuth(firebaseApp);
+import { auth, getCurrentUser } from '$lib/stores/auth-store';
 
 const provider = new GoogleAuthProvider();
 const facebookProvider = new FacebookAuthProvider();
@@ -57,7 +54,7 @@ export const signInWithFacebook = async (): Promise<UserCredential | null> => {
 
 export const getAccessToken = async (): Promise<string | null> => {
   try {
-    const user = auth.currentUser;
+    const user = getCurrentUser();
     if (user) {
       const token = await user.getIdToken();
       return token;
