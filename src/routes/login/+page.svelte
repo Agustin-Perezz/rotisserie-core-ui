@@ -8,16 +8,17 @@
     CardContent
   } from '$lib/components/ui/card';
   import { Button } from '$lib/components/ui/button';
-  import { navigateToShops } from '$lib/utils/navigation';
+  import { handlePostLoginRedirect } from '$lib/utils/navigation';
+  import { page } from '$app/state';
 
   const handleGoogleSignIn = async () => {
     await signInWithGoogle();
-    navigateToShops();
+    handlePostLoginRedirect(page.url.searchParams);
   };
 
   const handleFacebookSignIn = async () => {
     await signInWithFacebook();
-    navigateToShops();
+    handlePostLoginRedirect(page.url.searchParams);
   };
 </script>
 

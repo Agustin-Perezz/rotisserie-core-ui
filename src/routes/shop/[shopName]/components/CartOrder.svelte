@@ -5,6 +5,9 @@
   import OrderCosts from './OrderCosts.svelte';
   import { useOrder } from '$lib/hooks/useOrder.js';
   import { ShoppingCart } from '@lucide/svelte';
+  import { getAccessToken } from '$lib/services/auth/index.js';
+  import { navigateToLoginWithRedirect } from '$lib/utils/navigation.js';
+  import { page } from '$app/state';
 
   export let shopId: string;
   export let ownerId: string;
@@ -18,6 +21,15 @@
     getTotal,
     handleConfirmOrder
   } = useOrder(shopId, ownerId);
+
+  const onConfirmClick = async () => {
+    const token = await getAccessToken();
+    if (!token) {
+      navigateToLoginWithRedirect(page.url.pathname);
+      return;
+    }
+    handleConfirmOrder($order);
+  };
 </script>
 
 <div class="mt-6">
@@ -83,7 +95,7 @@
         {:else}
           <Button
             class="w-full rounded-lg bg-blue-600 py-3 font-bold text-white hover:bg-blue-700"
-            onclick={() => handleConfirmOrder($order)}
+            onclick={onConfirmClick}
             disabled={!$order || $order.items.length === 0}
           >
             Confirm Order
