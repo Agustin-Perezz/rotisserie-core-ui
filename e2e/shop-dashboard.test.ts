@@ -1,7 +1,7 @@
-import { expect, test } from '@playwright/test';
+import { test, expect } from './fixtures/auth';
 import { mockItems } from './mocks/items';
 
-test('Shop dashboard page', async ({ page }) => {
+test('Shop dashboard page', async ({ authenticatedPage: page }) => {
   const mockShop = {
     id: '123',
     name: 'Test Shop',
@@ -29,5 +29,6 @@ test('Shop dashboard page', async ({ page }) => {
   });
 
   await page.goto('/shop/123/dashboard');
+
   await expect(page.getByTestId('shop-table')).toBeVisible();
 });
