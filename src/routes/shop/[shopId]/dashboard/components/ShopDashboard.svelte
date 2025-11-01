@@ -23,18 +23,20 @@
 
 <div class="bg-muted/30 min-h-screen">
   <main class="container mx-auto px-4 py-8">
-    <div class="mb-6 flex items-center justify-between">
-      <div>
-        <h1 class="mb-1 text-3xl font-semibold">Dashboard</h1>
-        <p class="text-muted-foreground flex items-center gap-2">
-          Panel de administración
-        </p>
+    <div class="mb-6 flex flex-col items-center">
+      <div class="w-full max-w-4xl">
+        <div>
+          <h1 class="mb-1 text-3xl font-semibold">Dashboard</h1>
+          <p class="text-muted-foreground flex items-center gap-2">
+            Panel de administración
+          </p>
+        </div>
       </div>
     </div>
 
-    <div class="flex flex-col gap-6">
+    <div class="flex flex-col items-center gap-6">
       <ShopOrders {orderSocket} />
-      <div>
+      <div class="w-full max-w-4xl">
         <div class="mb-4 flex items-center justify-between">
           <div>
             <h2 class="mb-1 text-xl font-semibold">Productos</h2>
