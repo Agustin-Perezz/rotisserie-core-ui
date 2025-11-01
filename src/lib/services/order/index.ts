@@ -27,3 +27,11 @@ export const updateOrderStatus = async (
   const response = await api.patch(`/orders/${orderId}`, { status });
   return response.data;
 };
+
+export const getOrdersByShop = async (
+  shopId: string,
+  status?: TOrderStatus
+): Promise<TOrder[]> => {
+  const response = await api.get(`/orders/shop/${shopId}?status=${status}`);
+  return response.data;
+};

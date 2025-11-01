@@ -2,21 +2,36 @@
   import { onMount, onDestroy } from 'svelte';
   import ShopDashboard from './components/ShopDashboard.svelte';
   import { getShopById } from '$lib/services/shop';
+  import { getOrdersByShop } from '$lib/services/order';
   import { page } from '$app/state';
   import { useFetch } from '$lib/hooks/useFetch';
   import { createOrderSocket } from '$lib/stores/orderSocket';
   import { shopStore } from '$lib/stores/shop-store';
+  import { TOrderStatus } from '$lib/types/order';
+  import { errorToast } from '$lib/alerts/toast';
+
+  const shopId = page.params.shopId;
 
   const {
     data: shopData,
     loading,
     error,
     run: refetchShop
-  } = useFetch(() => getShopById(page.params.shopId), true);
+  } = useFetch(() => getShopById(shopId), true);
 
-  const orderSocket = createOrderSocket(page.params.shopId);
+  const orderSocket = createOrderSocket(shopId);
 
-  onMount(() => {
+  onMount(async () => {
+    try {
+      const existingOrders = await getOrdersByShop(
+        shopId,
+        TOrderStatus.PENDING
+      );
+      orderSocket.setInitialOrders(existingOrders);
+    } catch (err: unknown) {
+      errorToast('Error al cargar órdenes: ' + (err as Error).message);
+    }
+
     orderSocket.connect();
   });
 
