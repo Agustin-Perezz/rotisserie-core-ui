@@ -11,7 +11,7 @@
   let { orderSocket }: ShopOrdersProps = $props();
 </script>
 
-<div>
+<div class="w-full max-w-4xl">
   <div class="mb-4">
     <div class="flex items-center gap-2">
       <h2 class="mb-1 text-xl font-semibold">Pedidos en Vivo</h2>
