@@ -28,7 +28,7 @@ export const updateOrderStatus = async (
   return response.data;
 };
 
-export const getOrdersByShop = async (
+export const getOrdersByShopId = async (
   shopId: string,
   status?: TOrderStatus
 ): Promise<TOrder[]> => {

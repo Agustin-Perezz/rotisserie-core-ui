@@ -2,7 +2,7 @@
   import { onMount, onDestroy } from 'svelte';
   import ShopDashboard from './components/ShopDashboard.svelte';
   import { getShopById } from '$lib/services/shop';
-  import { getOrdersByShop } from '$lib/services/order';
+  import { getOrdersByShopId } from '$lib/services/order';
   import { page } from '$app/state';
   import { useFetch } from '$lib/hooks/useFetch';
   import { createOrderSocket } from '$lib/stores/orderSocket';
@@ -23,7 +23,7 @@
 
   onMount(async () => {
     try {
-      const existingOrders = await getOrdersByShop(
+      const existingOrders = await getOrdersByShopId(
         shopId,
         TOrderStatus.PENDING
       );
