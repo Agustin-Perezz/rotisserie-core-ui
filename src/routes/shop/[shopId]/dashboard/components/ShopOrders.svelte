@@ -24,7 +24,7 @@
     </p>
   </div>
 
-  <div class="space-y-4">
+  <div class="max-h-[600px] space-y-4 overflow-y-auto pr-2">
     {#each $orderSocket.orders as order (order.id)}
       <OrderCard {order} />
     {:else}
