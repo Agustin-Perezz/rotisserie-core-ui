@@ -40,5 +40,9 @@ export function createOrderSocket(shopId: string) {
     socket?.disconnect();
   }
 
-  return { subscribe, connect, disconnect };
+  function setInitialOrders(orders: TOrder[]) {
+    update((s) => ({ ...s, orders }));
+  }
+
+  return { subscribe, connect, disconnect, setInitialOrders };
 }
