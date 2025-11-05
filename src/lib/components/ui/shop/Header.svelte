@@ -11,6 +11,17 @@
   import { page } from '$app/state';
   import { mpLogin } from '$lib/services/mp';
   import { errorToast } from '$lib/alerts/toast';
+  import { checkMpConnection } from '$lib/hooks/useMpConnection';
+
+  let mpConnected = $state(false);
+
+  $effect(() => {
+    if ($currentShop?.ownerId) {
+      checkMpConnection($currentShop.ownerId).then((connected) => {
+        mpConnected = connected;
+      });
+    }
+  });
 
   const handleLogout = async () => {
     await signOut();
@@ -45,7 +56,7 @@
     </div>
     <div class="flex items-center gap-2">
       {#if $currentShop}
-        <ShopSettings {handleClickMpLogin} />
+        <ShopSettings {handleClickMpLogin} {mpConnected} />
       {/if}
       {#if $isAuthenticated}
         <Button variant="outline" onclick={handleLogout}>Cerrar sesión</Button>
