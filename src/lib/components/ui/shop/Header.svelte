@@ -9,10 +9,38 @@
   import { currentShop } from '$lib/stores/shop-store';
   import { isAuthenticated } from '$lib/stores/auth-store';
   import { page } from '$app/state';
+  import { mpLogin } from '$lib/services/mp';
+  import { errorToast } from '$lib/alerts/toast';
+  import { checkMpConnection } from '$lib/hooks/useMpConnection';
+
+  let mpConnected = $state(false);
+
+  $effect(() => {
+    if ($currentShop?.ownerId) {
+      checkMpConnection($currentShop.ownerId).then((connected) => {
+        mpConnected = connected;
+      });
+    }
+  });
 
   const handleLogout = async () => {
     await signOut();
     navigateToLogin();
+  };
+
+  const handleClickMpLogin = async () => {
+    try {
+      if (!$currentShop) {
+        return;
+      }
+
+      const response = await mpLogin($currentShop.ownerId);
+      if (response.url) {
+        window.location.href = response.url;
+      }
+    } catch {
+      errorToast('Error al conectar con Mercado Pago');
+    }
   };
 </script>
 
@@ -28,7 +56,7 @@
     </div>
     <div class="flex items-center gap-2">
       {#if $currentShop}
-        <ShopSettings />
+        <ShopSettings {handleClickMpLogin} {mpConnected} />
       {/if}
       {#if $isAuthenticated}
         <Button variant="outline" onclick={handleLogout}>Cerrar sesión</Button>
