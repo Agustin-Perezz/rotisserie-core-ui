@@ -2,11 +2,26 @@
   import { Button } from '$lib/components/ui/button/index.js';
   import Settings from '@lucide/svelte/icons/settings';
   import * as DropdownMenu from '$lib/components/ui/dropdown-menu/index.js';
+  import { goto } from '$app/navigation';
+  import { page } from '$app/state';
+
+  const isOnDashboard = page.url.pathname.includes('/dashboard');
 
   let {
     handleClickMpLogin,
-    mpConnected
-  }: { handleClickMpLogin: () => void; mpConnected: boolean } = $props();
+    mpConnected,
+    shopId
+  }: {
+    handleClickMpLogin: () => void;
+    mpConnected: boolean;
+    shopId?: string;
+  } = $props();
+
+  const handleUpdateShop = () => {
+    if (shopId) {
+      goto(`/shop/${shopId}/dashboard/edit-shop`);
+    }
+  };
 </script>
 
 <DropdownMenu.Root>
@@ -24,6 +39,11 @@
     {/snippet}
   </DropdownMenu.Trigger>
   <DropdownMenu.Content align="end" class="w-56">
+    {#if isOnDashboard}
+      <DropdownMenu.Item onclick={handleUpdateShop}>
+        Actualizar Negocio
+      </DropdownMenu.Item>
+    {/if}
     <DropdownMenu.Item onclick={handleClickMpLogin} disabled={mpConnected}>
       <img src="/mp-icon.svg" alt="Mercado Pago" class="mr-2 h-4 w-4" />
       Conectar Mercado Pago
