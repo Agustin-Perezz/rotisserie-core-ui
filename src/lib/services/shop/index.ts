@@ -22,3 +22,12 @@ export const getShopsByOwner = async (ownerId: string): Promise<TShop[]> => {
   const response = await api.get<TShop[]>(`/shops/owner/${ownerId}`);
   return response.data;
 };
+
+export const updateShop = async (
+  shopId: string,
+  shopData: TShopFormData
+): Promise<TShop> => {
+  const response = await api.put<TShop>(`/shops/${shopId}`, shopData);
+  successToast('Negocio actualizado exitosamente!');
+  return response.data;
+};

@@ -56,7 +56,11 @@
     </div>
     <div class="flex items-center gap-2">
       {#if $currentShop}
-        <ShopSettings {handleClickMpLogin} {mpConnected} />
+        <ShopSettings
+          {handleClickMpLogin}
+          {mpConnected}
+          shopId={$currentShop.id}
+        />
       {/if}
       {#if $isAuthenticated}
         <Button variant="outline" onclick={handleLogout}>Cerrar sesión</Button>

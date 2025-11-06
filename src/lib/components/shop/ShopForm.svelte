@@ -7,7 +7,11 @@
   import { shopFormSchema } from '$lib/schemas/shop.schema';
   import Button from '../ui/button/button.svelte';
 
-  const { handleSubmit }: HandleSubmitForm<TShopFormData> = $props();
+  const {
+    handleSubmit,
+    initialValues
+  }: HandleSubmitForm<TShopFormData> & { initialValues?: TShopFormData } =
+    $props();
 
   const shopInputData = [
     {
@@ -31,7 +35,7 @@
   ];
 
   const { form, errors, isSubmitting } = createForm({
-    initialValues: {
+    initialValues: initialValues || {
       name: '',
       description: '',
       location: ''
