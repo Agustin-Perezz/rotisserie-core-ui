@@ -48,11 +48,7 @@
   <div class="container mx-auto flex items-center justify-between px-4 py-4">
     <div class="flex items-center gap-2">
       <div class="bg-primary h-8 w-8 rounded-lg"></div>
-      {#if $currentShop}
-        <span class="text-lg font-semibold">{$currentShop.name}</span>
-      {:else}
-        <span class="text-lg font-semibold">Rotisserie</span>
-      {/if}
+      <span class="text-lg font-semibold">Rotisserie</span>
     </div>
     <div class="flex items-center gap-2">
       {#if $currentShop}
