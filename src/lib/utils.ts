@@ -20,6 +20,12 @@ export function objectToFormData(obj: Record<string, unknown>): FormData {
 
     if (value instanceof File) {
       formData.append(key, value);
+    } else if (Array.isArray(value)) {
+      if (value.length > 0 && value[0] instanceof File) {
+        value.forEach((file) => {
+          formData.append(`${key}`, file);
+        });
+      }
     } else if (typeof value === 'number') {
       formData.append(key, value.toString());
     } else if (typeof value === 'string') {

@@ -6,7 +6,7 @@
 
   const randomSeed = item.id || Math.random().toString(36).substring(7);
   const mockImage =
-    item.image || `https://picsum.photos/seed/${randomSeed}/400/600`;
+    item.images?.[0]?.url || `https://picsum.photos/seed/${randomSeed}/400/600`;
 </script>
 
 <div
@@ -30,6 +30,7 @@
         onclick={() =>
           addItemToOrder({
             ...item,
+            image: mockImage,
             quantity: 1
           })}
       >

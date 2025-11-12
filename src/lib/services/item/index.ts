@@ -49,3 +49,13 @@ export const deleteItem = async (id: string): Promise<void> => {
   await api.delete(`/items/${id}`);
   successToast('Item eliminado exitosamente!');
 };
+
+export const deleteItemImage = async (
+  itemId: string,
+  imageUrl: string
+): Promise<void> => {
+  await api.delete(`/items/${itemId}/images`, {
+    params: { imageId: imageUrl }
+  });
+  successToast('Imagen eliminada exitosamente!');
+};

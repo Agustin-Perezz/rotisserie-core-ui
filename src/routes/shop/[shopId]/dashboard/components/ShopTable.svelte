@@ -6,7 +6,6 @@
   import { deleteItem } from '$lib/services/item';
   import { navigateToEditItem } from '$lib/utils/navigation';
   import { page } from '$app/state';
-  import { currentItemId } from '$lib/stores/item-store';
 
   type ShopTableProps = {
     data: IItemTable[];
@@ -16,7 +15,6 @@
   let { data, refetchItems }: ShopTableProps = $props();
 
   const handleEdit = (id: string) => {
-    currentItemId.set(id);
     navigateToEditItem(page.params.shopId, id);
   };
 
