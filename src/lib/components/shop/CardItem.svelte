@@ -4,10 +4,6 @@
   import { Plus } from '@lucide/svelte';
 
   export let item: TItem;
-
-  const randomSeed = item.id || Math.random().toString(36).substring(7);
-  const mockImage =
-    item.images?.[0]?.url || `https://picsum.photos/seed/${randomSeed}/400/600`;
 </script>
 
 <div
@@ -16,7 +12,11 @@
   <div
     class="aspect-square overflow-hidden bg-gray-50 md:w-32 md:flex-shrink-0"
   >
-    <img src={mockImage} alt={item.name} class="h-full w-full object-cover" />
+    <img
+      src={item.images?.[0]?.url || '/default-item-image.webp'}
+      alt={item.name}
+      class="h-full w-full object-cover"
+    />
   </div>
   <div class="flex flex-col justify-between p-2 md:flex-1">
     <h3 class="mb-1 text-sm font-medium text-gray-900">{item.name}</h3>
@@ -30,7 +30,6 @@
         onclick={() =>
           addItemToOrder({
             ...item,
-            image: mockImage,
             quantity: 1
           })}
       >
