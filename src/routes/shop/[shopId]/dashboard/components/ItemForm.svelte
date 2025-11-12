@@ -6,7 +6,7 @@
   import { createItemSchema } from '$lib/schemas/item.schema';
   import { page } from '$app/state';
   import type { TItem, TItemFormData } from '$lib/types/item';
-  import ImageField from '$lib/components/form/ImageField.svelte';
+  import MultipleImageField from '$lib/components/form/MultipleImageField.svelte';
 
   type Props = {
     handleSubmit: (values: TItemFormData) => Promise<void>;
@@ -16,6 +16,8 @@
   const shopId = page.params.shopId;
 
   const { handleSubmit, initialValues }: Props = $props();
+
+  let newImages = $state<File[]>([]);
 
   const itemInputData = [
     {
@@ -46,9 +48,19 @@
       price: initialValues?.price || 0,
       shopId: shopId
     },
-    onSubmit: handleSubmit,
+    onSubmit: async (values) => {
+      const formData: TItemFormData = {
+        ...values,
+        images: newImages
+      };
+      await handleSubmit(formData);
+    },
     extend: validator({ schema: createItemSchema })
   });
+
+  const handleImagesChange = (newImgs: File[]) => {
+    newImages = newImgs;
+  };
 </script>
 
 <form use:form>
@@ -59,16 +71,19 @@
     />
   {/each}
 
-  <ImageField
-    id="image"
-    name="image"
-    label="Imagen (opcional)"
-    error={$errors.image?.[0] || ''}
+  <MultipleImageField
+    name="images"
+    label="Imágenes (opcional)"
+    existingImages={initialValues?.images || []}
+    itemId={initialValues?.id}
+    onImagesChange={handleImagesChange}
+    error={$errors.images?.[0] || ''}
   />
 
   <Button
     type="submit"
     disabled={$isSubmitting}
-    data-testid="submit-item-button">Crear Producto</Button
+    data-testid="submit-item-button"
+    >{initialValues ? 'Actualizar Producto' : 'Crear Producto'}</Button
   >
 </form>

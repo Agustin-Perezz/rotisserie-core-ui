@@ -4,15 +4,23 @@ export type TItem = {
   name: string;
   description?: string;
   price: number;
-  image?: string;
+  images?: TItemImage[];
   shopId: string;
 } & Base;
 
+export type TItemImage = {
+  url: string;
+  id: string;
+};
+
 export type IItemTable = Omit<
   TItem,
-  'image' | 'createdAt' | 'updatedAt' | 'shopId'
+  'images' | 'createdAt' | 'updatedAt' | 'shopId'
 >;
 
-export type TItemFormData = Omit<TItem, 'createdAt' | 'updatedAt' | 'image'> & {
-  image?: File;
+export type TItemFormData = Omit<
+  TItem,
+  'createdAt' | 'updatedAt' | 'images'
+> & {
+  images?: File[];
 };
