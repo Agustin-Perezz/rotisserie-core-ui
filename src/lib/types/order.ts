@@ -26,7 +26,7 @@ export type TCreateOrderRequest = {
 
 export type TOrderItemContext = Pick<
   TItem,
-  'id' | 'name' | 'price' | 'image' | 'description' | 'shopId'
+  'id' | 'name' | 'price' | 'images' | 'description' | 'shopId'
 > & {
   quantity: number;
 };
