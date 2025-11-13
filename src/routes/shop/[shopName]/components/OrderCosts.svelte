@@ -10,7 +10,7 @@
     >
   </div>
   <div class="flex items-center justify-between">
-    <span class="text-sm text-gray-600">Shipping Fee</span>
+    <span class="text-sm text-gray-600">Costo de Envío</span>
     <span class="text-sm font-medium text-gray-800"
       >${shippingFee.toFixed(2)}</span
     >
@@ -18,7 +18,7 @@
   <div class="flex items-center justify-between border-t border-gray-200 pt-2">
     <span class="text-lg font-bold text-gray-800">Total</span>
     <span class="text-lg font-bold text-gray-800"
-      >AUD ${(subtotal + shippingFee).toFixed(2)}</span
+      >${(subtotal + shippingFee).toFixed(2)}</span
     >
   </div>
 </div>

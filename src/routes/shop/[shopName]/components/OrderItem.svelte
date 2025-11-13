@@ -10,9 +10,9 @@
     <div
       class="flex h-16 w-16 items-center justify-center rounded-lg bg-gray-200"
     >
-      {#if item.image}
+      {#if item.images}
         <img
-          src={item.image}
+          src={item.images?.[0]?.url}
           alt={item.name}
           class="h-full w-full rounded-lg object-cover"
         />
@@ -31,7 +31,7 @@
     <div class="truncate text-sm font-medium text-gray-800">
       {item.name}
     </div>
-    <div class="text-xs text-gray-500">Brand</div>
+    <div class="text-xs text-gray-500">Marca</div>
   </div>
 
   <div class="flex flex-shrink-0 flex-col items-end gap-2">

@@ -16,7 +16,7 @@
     <div class="flex items-center gap-2">
       <h2 class="mb-1 text-xl font-semibold">Pedidos en Vivo</h2>
       <span class="text-xs">
-        {$orderSocket.connected ? '🟢 Live' : '🔴 Offline'}
+        {$orderSocket.connected ? '🟢 En Línea' : '🔴 Desconectado'}
       </span>
     </div>
     <p class="text-muted-foreground text-sm">

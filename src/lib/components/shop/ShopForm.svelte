@@ -17,20 +17,20 @@
     {
       name: 'name',
       type: 'text',
-      label: 'Name',
-      placeholder: 'Enter your name'
+      label: 'Nombre',
+      placeholder: 'Ingrese su nombre'
     },
     {
       name: 'description',
       type: 'textarea',
-      label: 'Description',
-      placeholder: 'Enter a description'
+      label: 'Descripción',
+      placeholder: 'Ingrese una descripción'
     },
     {
       name: 'location',
       type: 'text',
-      label: 'Location',
-      placeholder: 'Enter your location'
+      label: 'Ubicación',
+      placeholder: 'Ingrese su ubicación'
     }
   ];
 
@@ -58,6 +58,6 @@
   <Button
     disabled={$isSubmitting}
     type="submit"
-    data-testid="submit-shop-button">Submit</Button
+    data-testid="submit-shop-button">Enviar</Button
   >
 </form>

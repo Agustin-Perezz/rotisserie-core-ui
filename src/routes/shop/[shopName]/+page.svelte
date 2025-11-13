@@ -16,12 +16,12 @@
 </script>
 
 {#if $loading}
-  <p>Loading...</p>
+  <p>Cargando...</p>
 {/if}
 
 {#if $error}
   <div class="m-0 flex h-screen items-center justify-center">
-    <p>Error loading items: {$error.message}</p>
+    <p>Error al cargar los productos: {$error.message}</p>
   </div>
 {/if}
 

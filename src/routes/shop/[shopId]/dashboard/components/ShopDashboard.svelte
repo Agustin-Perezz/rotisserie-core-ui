@@ -26,7 +26,7 @@
     <div class="mb-6 flex flex-col items-center">
       <div class="w-full max-w-4xl">
         <div>
-          <h1 class="mb-1 text-3xl font-semibold">Dashboard</h1>
+          <h1 class="mb-1 text-3xl font-semibold">Panel de Control</h1>
           <p class="text-muted-foreground flex items-center gap-2">
             Panel de administración
           </p>

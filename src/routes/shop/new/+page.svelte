@@ -16,6 +16,6 @@
 </script>
 
 <div class="flex min-h-[calc(100vh-5rem)] flex-col items-center justify-center">
-  <h1 class="mb-4 text-2xl font-bold">Create a New Shop</h1>
+  <h1 class="mb-4 text-2xl font-bold">Crear un Nuevo Negocio</h1>
   <ShopForm {handleSubmit} />
 </div>
