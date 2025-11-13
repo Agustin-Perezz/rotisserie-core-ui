@@ -23,7 +23,21 @@ export const clearOrder = () => {
 
 export const addItemToOrder = (item: TOrderItemContext) => {
   orderStore.update((orderState) => {
-    const newItems = [...orderState.items, item];
+    const existingItemIndex = orderState.items.findIndex(
+      (i) => i.id === item.id
+    );
+
+    let newItems;
+    if (existingItemIndex !== -1) {
+      newItems = [...orderState.items];
+      newItems[existingItemIndex] = {
+        ...newItems[existingItemIndex],
+        quantity: newItems[existingItemIndex].quantity + 1
+      };
+    } else {
+      newItems = [...orderState.items, item];
+    }
+
     const newTotalPrice = calculateTotalPrice(newItems);
     return {
       items: newItems,
