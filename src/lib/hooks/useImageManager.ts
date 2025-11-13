@@ -1,3 +1,4 @@
+import { writable } from 'svelte/store';
 import { deleteItemImage } from '$lib/services/item';
 import { errorToast } from '$lib/alerts/toast';
 import type { TItemImage } from '$lib/types/item';
@@ -11,15 +12,17 @@ type UseImageManagerParams = {
 export const useImageManager = (params: UseImageManagerParams) => {
   const { existingImages, itemId, onImagesChange } = params;
 
-  let keptImages = $state<string[]>(existingImages.map((image) => image.url));
-  let newImages = $state<File[]>([]);
+  const keptImages = writable<string[]>(
+    existingImages.map((image) => image.url)
+  );
+  const newImages = writable<File[]>([]);
 
   const handleAddImage = (event: Event) => {
     const input = event.target as HTMLInputElement;
     const files = input.files;
 
     if (files && files.length > 0) {
-      newImages = [...newImages, files[0]];
+      newImages.update((current) => [...current, files[0]]);
       const fileInput = event.target as HTMLInputElement;
       if (fileInput) {
         fileInput.value = '';
@@ -29,12 +32,15 @@ export const useImageManager = (params: UseImageManagerParams) => {
   };
 
   const removeExistingImage = async (index: number) => {
-    const imageUrl = keptImages[index];
+    let imageUrl: string | undefined;
+    keptImages.subscribe((current) => {
+      imageUrl = current[index];
+    })();
 
     if (itemId && imageUrl) {
       try {
         await deleteItemImage(itemId, imageUrl);
-        keptImages = keptImages.filter((_, i) => i !== index);
+        keptImages.update((current) => current.filter((_, i) => i !== index));
       } catch {
         errorToast('Error al eliminar la imagen');
       }
@@ -42,13 +48,17 @@ export const useImageManager = (params: UseImageManagerParams) => {
   };
 
   const removeNewImage = (index: number) => {
-    newImages = newImages.filter((_, i) => i !== index);
+    newImages.update((current) => current.filter((_, i) => i !== index));
     notifyChange();
   };
 
   const notifyChange = () => {
     if (onImagesChange) {
-      onImagesChange(newImages);
+      let currentImages: File[] = [];
+      newImages.subscribe((current) => {
+        currentImages = current;
+      })();
+      onImagesChange(currentImages);
     }
   };
 
@@ -58,12 +68,8 @@ export const useImageManager = (params: UseImageManagerParams) => {
   };
 
   return {
-    get keptImages() {
-      return keptImages;
-    },
-    get newImages() {
-      return newImages;
-    },
+    keptImages,
+    newImages,
     handleAddImage,
     removeExistingImage,
     removeNewImage,

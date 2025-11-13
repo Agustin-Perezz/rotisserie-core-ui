@@ -39,11 +39,11 @@
     >{label}</label
   >
 
-  {#if keptImages.length > 0}
+  {#if $keptImages.length > 0}
     <div class="mb-2 rounded border border-gray-200 p-2">
       <p class="mb-2 text-xs text-gray-600">Imágenes existentes:</p>
       <ul class="space-y-1">
-        {#each keptImages as image, index (image)}
+        {#each $keptImages as image, index (image)}
           <ImageListItem
             imageName={getImageName(image)}
             {index}
@@ -55,11 +55,11 @@
     </div>
   {/if}
 
-  {#if newImages.length > 0}
+  {#if $newImages.length > 0}
     <div class="mb-2 rounded border border-gray-200 p-2">
       <p class="mb-2 text-xs text-gray-600">Nuevas imágenes:</p>
       <ul class="space-y-1">
-        {#each newImages as image, index (`${image.name}-${image.lastModified}`)}
+        {#each $newImages as image, index (`${image.name}-${image.lastModified}`)}
           <ImageListItem
             {index}
             imageName={image.name}
