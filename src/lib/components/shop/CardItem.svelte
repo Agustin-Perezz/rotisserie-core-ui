@@ -26,7 +26,7 @@
       </span>
       <button
         class="rounded-full bg-blue-800 p-1.5 text-white transition-colors hover:opacity-90"
-        aria-label="Add {item.name} to cart"
+        aria-label="Agregar {item.name} al carrito"
         onclick={() =>
           addItemToOrder({
             ...item,

@@ -15,7 +15,7 @@
 </script>
 
 {#await getItemData()}
-  <p>Loading...</p>
+  <p>Cargando...</p>
 {:then data}
   <div class="flex h-screen flex-col items-center justify-center">
     <h1 class="mb-4 text-2xl font-bold">Edita un producto</h1>

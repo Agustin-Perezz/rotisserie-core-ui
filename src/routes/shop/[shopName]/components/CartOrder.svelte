@@ -51,18 +51,20 @@
     >
       <Dialog.Header>
         <Dialog.Title class="text-left text-lg font-bold text-gray-800"
-          >{$showPayment ? 'Payment' : 'Order Summary'}</Dialog.Title
+          >{$showPayment ? 'Pago' : 'Resumen del Pedido'}</Dialog.Title
         >
       </Dialog.Header>
 
       <div class="space-y-4 py-4">
         {#if !$order || $order.items.length === 0}
-          <div class="py-8 text-center text-gray-500">Your cart is empty</div>
+          <div class="py-8 text-center text-gray-500">
+            Tu carrito está vacío
+          </div>
         {:else if $showPayment}
           <div class="space-y-4">
             <div class="text-center">
               <h3 class="text-lg font-semibold text-gray-800">
-                Complete Your Payment
+                Completa tu Pago
               </h3>
               <p class="text-sm text-gray-600">
                 Total: ${(getTotal($order, $shippingFee) / 100).toFixed(2)}
@@ -90,7 +92,7 @@
             class="w-full rounded-lg bg-gray-500 py-3 font-bold text-white hover:bg-gray-600"
             onclick={() => showPayment.set(false)}
           >
-            Back to Order
+            Volver al Pedido
           </Button>
         {:else}
           <Button
@@ -98,7 +100,7 @@
             onclick={onConfirmClick}
             disabled={!$order || $order.items.length === 0}
           >
-            Confirm Order
+            Confirmar Pedido
           </Button>
         {/if}
       </Dialog.Footer>

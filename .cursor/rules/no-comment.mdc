@@ -1,0 +1,33 @@
+---
+alwaysApply: true
+---
+
+Do not add comments to the code when generating or modifying files.
+
+This includes:
+- Inline comments explaining code logic
+- Function/method documentation comments
+- JSDoc or TSDoc comments
+- TODO or FIXME comments
+- Multi-line explanatory comments
+- Block comments describing what code does
+
+Write self-documenting code with clear variable and function names instead.
+
+Only add comments if absolutely necessary for:
+- Legal requirements (copyright notices, licenses)
+- Complex algorithms where clarity is critical and cannot be expressed through code structure
+- External API or library behavior that is non-obvious and critical
+
+Examples of what to avoid:
+
+Bad:
+```typescript
+// Get the user from the database
+const user = await db.getUser(id);
+```
+
+Good:
+```typescript
+const user = await db.getUser(id);
+```
