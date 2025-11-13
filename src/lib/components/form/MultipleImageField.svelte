@@ -27,6 +27,7 @@
   const {
     keptImages,
     newImages,
+    removingImages,
     handleAddImage,
     removeExistingImage,
     removeNewImage,
@@ -49,6 +50,7 @@
             {index}
             bgColor="bg-gray-50"
             handleClickRemove={removeExistingImage}
+            isRemoving={$removingImages.has(index)}
           />
         {/each}
       </ul>
