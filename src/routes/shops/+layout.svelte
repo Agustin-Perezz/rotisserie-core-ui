@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from 'svelte';
   import Header from '$lib/components/ui/shop/Header.svelte';
+  import LoadingSpinner from '$lib/components/ui/loading-spinner.svelte';
   import { isAuthenticated, isAuthLoading } from '$lib/stores/auth-store';
   import { navigateToLogin } from '$lib/utils/navigation';
 
@@ -18,9 +19,7 @@
 </script>
 
 {#if $isAuthLoading}
-  <div class="flex min-h-screen items-center justify-center">
-    <div class="text-lg">Cargando...</div>
-  </div>
+  <LoadingSpinner />
 {:else if $isAuthenticated}
   <Header />
   {@render children()}

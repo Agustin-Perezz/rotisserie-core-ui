@@ -4,6 +4,7 @@
   import { getShopById, updateShop } from '$lib/services/shop';
   import { useFetch } from '$lib/hooks/useFetch';
   import ShopForm from '$lib/components/shop/ShopForm.svelte';
+  import LoadingSpinner from '$lib/components/ui/loading-spinner.svelte';
   import type { TShopFormData } from '$lib/types/shop';
   import { errorToast } from '$lib/alerts/toast';
 
@@ -30,9 +31,7 @@
     <h1 class="mb-6 text-3xl font-bold">Actualizar Negocio</h1>
 
     {#if $loading}
-      <div class="flex items-center justify-center py-12">
-        <p>Cargando...</p>
-      </div>
+      <LoadingSpinner />
     {:else if $error}
       <div class="flex items-center justify-center py-12">
         <p class="text-destructive">

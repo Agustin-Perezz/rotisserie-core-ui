@@ -4,6 +4,7 @@
   import { useFetch } from '$lib/hooks/useFetch';
   import CartOrder from './components/CartOrder.svelte';
   import { getShopByName } from '$lib/services/shop';
+  import LoadingSpinner from '$lib/components/ui/loading-spinner.svelte';
   import Store from '@lucide/svelte/icons/store';
 
   const shopName = page.params.shopName;
@@ -16,7 +17,7 @@
 </script>
 
 {#if $loading}
-  <p>Cargando...</p>
+  <LoadingSpinner />
 {/if}
 
 {#if $error}

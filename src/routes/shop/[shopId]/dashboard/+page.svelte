@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount, onDestroy } from 'svelte';
   import ShopDashboard from './components/ShopDashboard.svelte';
+  import LoadingSpinner from '$lib/components/ui/loading-spinner.svelte';
   import { getShopById } from '$lib/services/shop';
   import { getOrdersByShopId } from '$lib/services/order';
   import { page } from '$app/state';
@@ -43,9 +44,7 @@
 </script>
 
 {#if $loading}
-  <div class="flex h-screen items-center justify-center">
-    <p>Cargando...</p>
-  </div>
+  <LoadingSpinner />
 {:else if $error}
   <div class="flex h-screen items-center justify-center">
     <p class="text-destructive">Error al cargar tienda: {$error.message}</p>
