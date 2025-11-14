@@ -17,6 +17,7 @@
       [TOrderStatus.PENDING]: 'Pendiente',
       [TOrderStatus.PREPARING]: 'En Preparación',
       [TOrderStatus.READY]: 'Listo',
+      [TOrderStatus.SENT]: 'Enviado',
       [TOrderStatus.COMPLETED]: 'Completado',
       [TOrderStatus.CANCELLED]: 'Cancelado'
     };
@@ -40,6 +41,8 @@
     } else if (currentStatus === TOrderStatus.PREPARING) {
       availableStatuses.push(TOrderStatus.READY, TOrderStatus.CANCELLED);
     } else if (currentStatus === TOrderStatus.READY) {
+      availableStatuses.push(TOrderStatus.SENT, TOrderStatus.CANCELLED);
+    } else if (currentStatus === TOrderStatus.SENT) {
       availableStatuses.push(TOrderStatus.COMPLETED, TOrderStatus.CANCELLED);
     }
 
