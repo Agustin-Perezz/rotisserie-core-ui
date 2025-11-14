@@ -47,8 +47,7 @@
 <header class="border-border bg-card border-b">
   <div class="container mx-auto flex items-center justify-between px-4 py-4">
     <div class="flex items-center gap-2">
-      <div class="bg-primary h-8 w-8 rounded-lg"></div>
-      <span class="text-lg font-semibold">Rotisserie</span>
+      <img src="/pedifast-header-logo.png" alt="PEDIFAST" class="h-12 w-auto" />
     </div>
     <div class="flex items-center gap-2">
       {#if $currentShop}
