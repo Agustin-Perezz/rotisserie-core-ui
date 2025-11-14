@@ -16,6 +16,7 @@ export const useImageManager = (params: UseImageManagerParams) => {
     existingImages.map((image) => image.url)
   );
   const newImages = writable<File[]>([]);
+  const removingImages = writable<Set<number>>(new Set());
 
   const handleAddImage = (event: Event) => {
     const input = event.target as HTMLInputElement;
@@ -38,11 +39,27 @@ export const useImageManager = (params: UseImageManagerParams) => {
     })();
 
     if (itemId && imageUrl) {
+      removingImages.update((current) => {
+        const newSet = new Set(current);
+        newSet.add(index);
+        return newSet;
+      });
+
       try {
         await deleteItemImage(itemId, imageUrl);
         keptImages.update((current) => current.filter((_, i) => i !== index));
+        removingImages.update((current) => {
+          const newSet = new Set(current);
+          newSet.delete(index);
+          return newSet;
+        });
       } catch {
         errorToast('Error al eliminar la imagen');
+        removingImages.update((current) => {
+          const newSet = new Set(current);
+          newSet.delete(index);
+          return newSet;
+        });
       }
     }
   };
@@ -70,6 +87,7 @@ export const useImageManager = (params: UseImageManagerParams) => {
   return {
     keptImages,
     newImages,
+    removingImages,
     handleAddImage,
     removeExistingImage,
     removeNewImage,
