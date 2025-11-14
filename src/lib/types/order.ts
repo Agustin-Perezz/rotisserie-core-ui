@@ -5,6 +5,7 @@ export enum TOrderStatus {
   PENDING = 'PENDING',
   PREPARING = 'PREPARING',
   READY = 'READY',
+  SENT = 'SENT',
   COMPLETED = 'COMPLETED',
   CANCELLED = 'CANCELLED'
 }

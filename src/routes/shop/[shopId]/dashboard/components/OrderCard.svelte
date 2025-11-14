@@ -31,6 +31,7 @@
         class:bg-yellow-100={order.status === TOrderStatus.PENDING}
         class:bg-gray-100={order.status === TOrderStatus.PREPARING}
         class:bg-green-100={order.status === TOrderStatus.READY}
+        class:bg-blue-100={order.status === TOrderStatus.SENT}
         class:bg-green-200={order.status === TOrderStatus.COMPLETED}
         class:bg-red-100={order.status === TOrderStatus.CANCELLED}
       >
