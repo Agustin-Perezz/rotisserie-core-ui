@@ -47,3 +47,7 @@ export const navigateToNewItem = (shopId: string) => {
 export const navigateToEditItem = (shopId: string, itemId: string) => {
   navigate(`/shop/${shopId}/dashboard/edit-item?itemId=${itemId}`);
 };
+
+export const navigateToUserOrders = () => {
+  navigate('/user/orders');
+};

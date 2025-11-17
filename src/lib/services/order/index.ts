@@ -35,3 +35,8 @@ export const getOrdersByShopId = async (
   const response = await api.get(`/orders/shop/${shopId}?status=${status}`);
   return response.data;
 };
+
+export const getUserOrders = async (userId: string): Promise<TOrder[]> => {
+  const response = await api.get(`/orders/user/${userId}`);
+  return response.data;
+};

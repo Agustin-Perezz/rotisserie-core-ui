@@ -1,15 +1,16 @@
-<script lang="ts ">
+<script lang="ts">
   import { Button } from '$lib/components/ui/button/index.js';
   import {
-    navigateToLogin,
-    navigateToLoginWithRedirect
+    navigateToLoginWithRedirect,
+    navigateToLogin
   } from '$lib/utils/navigation';
-  import { signOut } from '$lib/services/auth';
   import ShopSettings from './ShopSettings.svelte';
+  import UserMenu from './UserMenu.svelte';
   import { currentShop } from '$lib/stores/shop-store';
   import { isAuthenticated } from '$lib/stores/auth-store';
   import { page } from '$app/state';
   import { mpLogin } from '$lib/services/mp';
+  import { signOut } from '$lib/services/auth';
   import { errorToast } from '$lib/alerts/toast';
   import { checkMpConnection } from '$lib/hooks/useMpConnection';
 
@@ -22,11 +23,6 @@
       });
     }
   });
-
-  const handleLogout = async () => {
-    await signOut();
-    navigateToLogin();
-  };
 
   const handleClickMpLogin = async () => {
     try {
@@ -41,6 +37,11 @@
     } catch {
       errorToast('Error al conectar con Mercado Pago');
     }
+  };
+
+  const handleLogout = async () => {
+    await signOut();
+    navigateToLogin();
   };
 </script>
 
@@ -58,7 +59,7 @@
         />
       {/if}
       {#if $isAuthenticated}
-        <Button variant="outline" onclick={handleLogout}>Cerrar sesión</Button>
+        <UserMenu onLogout={handleLogout} />
       {:else}
         <Button
           variant="outline"

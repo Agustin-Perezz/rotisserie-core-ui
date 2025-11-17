@@ -4,6 +4,7 @@
   import { TOrderStatus, type TOrder } from '$lib/types/order';
   import { updateOrderStatus } from '$lib/services/order';
   import { successToast, errorToast } from '$lib/alerts/toast';
+  import { getOrderStatusLabel } from '$lib/utils';
 
   type OrderCardStatusProps = {
     order: TOrder;
@@ -11,18 +12,6 @@
 
   let { order }: OrderCardStatusProps = $props();
   let isUpdating = $state(false);
-
-  const getStatusLabel = (status: TOrderStatus): string => {
-    const labels: Record<TOrderStatus, string> = {
-      [TOrderStatus.PENDING]: 'Pendiente',
-      [TOrderStatus.PREPARING]: 'En Preparación',
-      [TOrderStatus.READY]: 'Listo',
-      [TOrderStatus.SENT]: 'Enviado',
-      [TOrderStatus.COMPLETED]: 'Completado',
-      [TOrderStatus.CANCELLED]: 'Cancelado'
-    };
-    return labels[status];
-  };
 
   const getAvailableStatuses = (
     currentStatus: TOrderStatus
@@ -83,7 +72,7 @@
               ? 'destructive'
               : 'default'}
           >
-            {getStatusLabel(status)}
+            {getOrderStatusLabel(status)}
           </DropdownMenu.Item>
         {/each}
       </DropdownMenu.Content>
