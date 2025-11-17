@@ -13,7 +13,6 @@
   import LoadingSpinner from '$lib/components/ui/loading-spinner.svelte';
   import { getOrderStatusLabel, getOrderStatusClasses } from '$lib/utils';
   import { currentUser } from '$lib/stores/auth-store';
-  import Header from '$lib/components/ui/shop/Header.svelte';
 
   let orders = $state<TOrder[]>([]);
   let loading = $state(true);
@@ -55,8 +54,6 @@
     }
   });
 </script>
-
-<Header />
 
 <div class="container mx-auto px-4 py-8">
   <div class="mb-6">
