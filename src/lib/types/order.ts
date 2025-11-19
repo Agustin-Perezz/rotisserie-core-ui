@@ -3,6 +3,7 @@ import type { TShop } from './shop';
 
 export enum TOrderStatus {
   PENDING = 'PENDING',
+  PAID = 'PAID',
   PREPARING = 'PREPARING',
   READY = 'READY',
   SENT = 'SENT',

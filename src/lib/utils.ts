@@ -14,6 +14,7 @@ export function calculateTotalPrice(items: TOrderItemContext[]): number {
 export function getOrderStatusLabel(status: TOrderStatus): string {
   const labels: Record<TOrderStatus, string> = {
     [TOrderStatus.PENDING]: 'Pendiente',
+    [TOrderStatus.PAID]: 'Pagado',
     [TOrderStatus.PREPARING]: 'En Preparación',
     [TOrderStatus.READY]: 'Listo',
     [TOrderStatus.SENT]: 'Enviado',
@@ -26,6 +27,7 @@ export function getOrderStatusLabel(status: TOrderStatus): string {
 export function getOrderStatusClasses(status: TOrderStatus): string {
   const classes: Record<TOrderStatus, string> = {
     [TOrderStatus.PENDING]: 'bg-yellow-100 text-yellow-800',
+    [TOrderStatus.PAID]: 'bg-cyan-100 text-cyan-800',
     [TOrderStatus.PREPARING]: 'bg-orange-100 text-orange-800',
     [TOrderStatus.READY]: 'bg-green-100 text-green-800',
     [TOrderStatus.SENT]: 'bg-blue-100 text-blue-800',

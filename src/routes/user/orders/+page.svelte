@@ -23,6 +23,7 @@
 
   const activeStatuses = [
     TOrderStatus.PENDING,
+    TOrderStatus.PAID,
     TOrderStatus.PREPARING,
     TOrderStatus.READY,
     TOrderStatus.SENT
