@@ -8,6 +8,7 @@ import { createOrder } from '$lib/services/order';
 import type { TOrderContext } from '$lib/types/order';
 import { createPreference, getSellerPublicKey } from '$lib/services/mp';
 import { useCheckoutBrick } from './useCheckoutBrick';
+import { getCurrentUser } from '$lib/stores/auth-store';
 
 export const useOrder = (shopId: string, ownerId: string) => {
   const showPayment = writable(false);
@@ -32,8 +33,14 @@ export const useOrder = (shopId: string, ownerId: string) => {
   };
 
   const handleConfirmOrder = async (orderData: TOrderContext) => {
+    const currentUser = getCurrentUser();
+    if (!currentUser) {
+      throw new Error('User not authenticated');
+    }
+
     const { id: orderId } = await createOrder({
       shopId,
+      userId: currentUser.uid,
       orderItems: orderData.items
     });
 
@@ -50,7 +57,8 @@ export const useOrder = (shopId: string, ownerId: string) => {
       'paymentBrick_container',
       preferenceId,
       publicKey,
-      getTotal(orderData, 0)
+      getTotal(orderData, 0),
+      orderId
     );
   };
 
