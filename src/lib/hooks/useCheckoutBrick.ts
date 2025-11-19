@@ -4,6 +4,7 @@ import { loadMercadoPago } from '@mercadopago/sdk-js';
 import { processPayment } from '$lib/services/mp/index.js';
 import { TMpPaymentMethod, type TMpPaymentRequest } from '$lib/types/mp';
 import { errorToast } from '$lib/alerts/toast';
+import { goto } from '$app/navigation';
 
 export function useCheckoutBrick() {
   const mp = writable<any>(null);
@@ -36,7 +37,8 @@ export function useCheckoutBrick() {
     containerId: string,
     preferenceId: string,
     sellerPublicKey: string,
-    amount: number
+    amount: number,
+    orderId: string
   ) => {
     await initializeMp(sellerPublicKey);
 
@@ -70,6 +72,7 @@ export function useCheckoutBrick() {
             formData
           }: TMpPaymentRequest) => {
             if (selectedPaymentMethod === TMpPaymentMethod.WALLET_PURCHASE) {
+              goto(`/user/orders?orderId=${orderId}`);
               resolve();
               return;
             }
@@ -77,6 +80,7 @@ export function useCheckoutBrick() {
             return new Promise<void>((resolve, reject) => {
               processPayment({ selectedPaymentMethod, formData })
                 .then(() => {
+                  goto(`/user/orders?orderId=${orderId}`);
                   resolve();
                 })
                 .catch(() => {

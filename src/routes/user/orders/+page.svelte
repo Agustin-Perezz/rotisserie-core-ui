@@ -1,5 +1,6 @@
 <script lang="ts">
-  import { onMount } from 'svelte';
+  import { onMount, onDestroy } from 'svelte';
+  import { page } from '$app/state';
   import { getUserOrders } from '$lib/services/order';
   import { TOrderStatus, type TOrder } from '$lib/types/order';
   import {
@@ -13,10 +14,12 @@
   import LoadingSpinner from '$lib/components/ui/loading-spinner.svelte';
   import { getOrderStatusLabel, getOrderStatusClasses } from '$lib/utils';
   import { currentUser } from '$lib/stores/auth-store';
+  import { createUserOrderSocket } from '$lib/stores/userOrderSocket';
 
   let orders = $state<TOrder[]>([]);
   let loading = $state(true);
   let filterType = $state<'active' | 'completed'>('active');
+  let orderSocket: ReturnType<typeof createUserOrderSocket> | null = null;
 
   const activeStatuses = [
     TOrderStatus.PENDING,
@@ -47,10 +50,35 @@
   onMount(async () => {
     try {
       orders = await getUserOrders($currentUser?.uid || '');
+
+      const orderId = page.url.searchParams.get('orderId');
+
+      if (orderId && $currentUser?.uid) {
+        orderSocket = createUserOrderSocket(orderId, $currentUser.uid);
+        orderSocket.connect();
+
+        orderSocket.subscribe((state) => {
+          if (state.order) {
+            const index = orders.findIndex((o) => o.id === state.order!.id);
+            if (index !== -1) {
+              orders[index] = state.order;
+              orders = [...orders];
+            } else {
+              orders = [state.order, ...orders];
+            }
+          }
+        });
+      }
     } catch {
       errorToast('Error al cargar tus pedidos');
     } finally {
       loading = false;
+    }
+  });
+
+  onDestroy(() => {
+    if (orderSocket) {
+      orderSocket.disconnect();
     }
   });
 </script>
@@ -93,43 +121,45 @@
   {:else}
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
       {#each filteredOrders as order (order.id)}
-        <Card>
-          <CardHeader>
-            <CardTitle class="flex items-center justify-between text-base">
-              <span>Pedido #{order.id.slice(0, 8)}</span>
-              <span
-                class="rounded-full px-2 py-1 text-xs font-normal {getOrderStatusClasses(
-                  order.status
-                )}"
-              >
-                {getOrderStatusLabel(order.status)}
-              </span>
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div class="space-y-2">
-              <div class="border-b pb-2">
-                <p class="text-sm font-medium">{order.shop.name}</p>
-              </div>
-
-              {#each order.orderItems as orderItem (orderItem.id)}
-                <div class="flex justify-between text-sm">
-                  <span>{orderItem.quantity}x {orderItem.item.name}</span>
-                  <span>${orderItem.item.price.toFixed(2)}</span>
+        <div id="order-{order.id}" class="transition-all duration-300">
+          <Card>
+            <CardHeader>
+              <CardTitle class="flex items-center justify-between text-base">
+                <span>Pedido #{order.id.slice(0, 8)}</span>
+                <span
+                  class="rounded-full px-2 py-1 text-xs font-normal {getOrderStatusClasses(
+                    order.status
+                  )}"
+                >
+                  {getOrderStatusLabel(order.status)}
+                </span>
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div class="space-y-2">
+                <div class="border-b pb-2">
+                  <p class="text-sm font-medium">{order.shop.name}</p>
                 </div>
-              {/each}
 
-              <div class="flex justify-between border-t pt-2 font-semibold">
-                <span>Total</span>
-                <span>${calculateTotal(order).toFixed(2)}</span>
-              </div>
+                {#each order.orderItems as orderItem (orderItem.id)}
+                  <div class="flex justify-between text-sm">
+                    <span>{orderItem.quantity}x {orderItem.item.name}</span>
+                    <span>${orderItem.item.price.toFixed(2)}</span>
+                  </div>
+                {/each}
 
-              <div class="text-muted-foreground text-xs">
-                {new Date(order.createdAt).toLocaleString('es-ES')}
+                <div class="flex justify-between border-t pt-2 font-semibold">
+                  <span>Total</span>
+                  <span>${calculateTotal(order).toFixed(2)}</span>
+                </div>
+
+                <div class="text-muted-foreground text-xs">
+                  {new Date(order.createdAt).toLocaleString('es-ES')}
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       {/each}
     </div>
   {/if}
