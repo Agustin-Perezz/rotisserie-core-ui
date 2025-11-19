@@ -22,6 +22,7 @@ export type TCreateOrderDto = {
 
 export type TCreateOrderRequest = {
   shopId: string;
+  userId: string;
   orderItems: TOrderItemContext[];
 };
 

@@ -10,6 +10,7 @@ export const createOrder = async (
 ): Promise<TOrder> => {
   const orderData = {
     shopId: data.shopId,
+    userId: data.userId,
     orderItems: data.orderItems.map((item) => ({
       itemId: item.id,
       quantity: item.quantity
