@@ -26,6 +26,8 @@
     const availableStatuses: TOrderStatus[] = [];
 
     if (currentStatus === TOrderStatus.PENDING) {
+      availableStatuses.push(TOrderStatus.PAID, TOrderStatus.CANCELLED);
+    } else if (currentStatus === TOrderStatus.PAID) {
       availableStatuses.push(TOrderStatus.PREPARING, TOrderStatus.CANCELLED);
     } else if (currentStatus === TOrderStatus.PREPARING) {
       availableStatuses.push(TOrderStatus.READY, TOrderStatus.CANCELLED);

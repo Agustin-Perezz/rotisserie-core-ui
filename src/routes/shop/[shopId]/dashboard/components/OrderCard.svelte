@@ -29,6 +29,7 @@
       <span
         class="rounded-full px-2 py-1 text-xs font-normal"
         class:bg-yellow-100={order.status === TOrderStatus.PENDING}
+        class:bg-cyan-100={order.status === TOrderStatus.PAID}
         class:bg-gray-100={order.status === TOrderStatus.PREPARING}
         class:bg-green-100={order.status === TOrderStatus.READY}
         class:bg-blue-100={order.status === TOrderStatus.SENT}
