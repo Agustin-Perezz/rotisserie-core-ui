@@ -4,6 +4,7 @@
   import LoadingSpinner from '$lib/components/ui/loading-spinner.svelte';
   import type { TItemFormData } from '$lib/types/item';
   import { page } from '$app/state';
+  import { navigateToShop } from '$lib/utils/navigation';
 
   const getItemData = async () => {
     const itemId = page.url.searchParams.get('itemId') || '';
@@ -12,6 +13,7 @@
 
   const handleSubmit = async (values: TItemFormData) => {
     await updateItem(values);
+    navigateToShop(page.params.shopId);
   };
 </script>
 
