@@ -55,18 +55,16 @@
         >
       </Dialog.Header>
 
-      <div class="space-y-4 py-4">
+      <div class="space-y-4">
         {#if !$order || $order.items.length === 0}
           <div class="py-8 text-center text-gray-500">
             Tu carrito está vacío
           </div>
         {:else if $showPayment}
-          <div class="space-y-4">
+          <div class="">
             <div class="text-center">
-              <h3 class="text-lg font-semibold text-gray-800">
-                Completa tu Pago
-              </h3>
-              <p class="text-sm text-gray-600">
+              <h3 class="text-xl font-bold text-gray-800">Completa tu Pago</h3>
+              <p class="text-mm text-gray-600">
                 Total: ${(getTotal($order, $shippingFee) / 100).toFixed(2)}
               </p>
             </div>
