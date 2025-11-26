@@ -20,8 +20,10 @@
 {#await getItemData()}
   <LoadingSpinner />
 {:then data}
-  <div class="flex h-screen flex-col items-center justify-center">
-    <h1 class="mb-4 text-2xl font-bold">Edita un producto</h1>
-    <ItemForm {handleSubmit} initialValues={data} />
+  <div class="container mx-auto px-4 py-8">
+    <div class="mx-auto max-w-2xl">
+      <h1 class="mb-4 text-2xl font-bold">Edita un producto</h1>
+      <ItemForm {handleSubmit} initialValues={data} />
+    </div>
   </div>
 {/await}
