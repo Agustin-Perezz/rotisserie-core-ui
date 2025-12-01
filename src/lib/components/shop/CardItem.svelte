@@ -4,6 +4,9 @@
   import { Plus } from '@lucide/svelte';
 
   export let item: TItem;
+  export let index: number | undefined = undefined;
+
+  const LIMIT_IMAGES_RENDERED = 6;
 </script>
 
 <div
@@ -16,6 +19,9 @@
       src={item.images?.[0]?.url || '/default-item-image.webp'}
       alt={item.name}
       class="h-full w-full object-cover"
+      loading={index !== undefined && index >= LIMIT_IMAGES_RENDERED
+        ? 'lazy'
+        : 'eager'}
     />
   </div>
   <div class="flex flex-col justify-between p-2 md:flex-1">
