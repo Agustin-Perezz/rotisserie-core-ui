@@ -43,8 +43,8 @@
       </div>
     </div>
     <div class="mx-2 mt-6 grid grid-cols-2 gap-4 sm:gap-6">
-      {#each $shop.items as item (item.id)}
-        <CardItem {item} />
+      {#each $shop.items as item, index (item.id)}
+        <CardItem {item} {index} />
       {/each}
     </div>
   </div>
