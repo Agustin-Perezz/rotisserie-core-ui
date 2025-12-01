@@ -88,6 +88,10 @@
   <div class="mb-6">
     <h1 class="text-3xl font-bold">Mis Pedidos</h1>
     <p class="text-muted-foreground mt-2">Consulta el estado de tus pedidos</p>
+    <p class="text-muted-foreground mt-1 text-sm">
+      Actualizaremos el estado de tu pedido automáticamente cuando esté listo y
+      podrás verlo aquí
+    </p>
   </div>
 
   <div class="mb-6 flex gap-2">
