@@ -2,15 +2,38 @@
   import { addItemToOrder } from '$lib/stores/order-store';
   import type { TItem } from '$lib/types/item';
   import { Plus } from '@lucide/svelte';
+  import ItemImageModal from './ItemImageModal.svelte';
 
-  export let item: TItem;
-  export let index: number | undefined = undefined;
+  let { item, index }: { item: TItem; index?: number } = $props();
 
   const LIMIT_IMAGES_RENDERED = 6;
+
+  let modalOpen = $state(false);
+
+  function handleCardClick() {
+    modalOpen = true;
+  }
+
+  function handleAddToCartClick(e: MouseEvent) {
+    e.stopPropagation();
+    addItemToOrder({
+      ...item,
+      quantity: 1
+    });
+  }
 </script>
 
 <div
-  class="max-w-sm overflow-hidden rounded-xl shadow-sm transition-shadow hover:shadow-md md:flex"
+  class="w-full max-w-sm cursor-pointer overflow-hidden rounded-xl shadow-sm transition-shadow hover:shadow-md md:flex"
+  onclick={handleCardClick}
+  role="button"
+  tabindex="0"
+  onkeydown={(e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      handleCardClick();
+    }
+  }}
 >
   <div
     class="aspect-square overflow-hidden bg-gray-50 md:w-32 md:flex-shrink-0"
@@ -33,14 +56,13 @@
       <button
         class="rounded-full bg-blue-800 p-1.5 text-white transition-colors hover:opacity-90"
         aria-label="Agregar {item.name} al carrito"
-        onclick={() =>
-          addItemToOrder({
-            ...item,
-            quantity: 1
-          })}
+        onclick={handleAddToCartClick}
+        type="button"
       >
         <Plus class="h-4 w-4" />
       </button>
     </div>
   </div>
 </div>
+
+<ItemImageModal bind:open={modalOpen} {item} />
