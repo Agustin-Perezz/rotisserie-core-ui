@@ -4,6 +4,7 @@ import type {
   TOrder,
   TOrderStatus
 } from '$lib/types/order';
+import { getCurrentISOTimestamp } from '$lib/utils';
 
 export const createOrder = async (
   data: TCreateOrderRequest
@@ -38,6 +39,9 @@ export const getOrdersByShopId = async (
 };
 
 export const getUserOrders = async (userId: string): Promise<TOrder[]> => {
-  const response = await api.get(`/orders/user/${userId}`);
+  const createdAt = getCurrentISOTimestamp();
+  const response = await api.get(
+    `/orders/user/${userId}?createdAt=${createdAt}`
+  );
   return response.data;
 };
