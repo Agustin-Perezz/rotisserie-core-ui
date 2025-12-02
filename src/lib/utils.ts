@@ -50,6 +50,10 @@ export function getInitials(
   return email ? email[0].toUpperCase() : 'U';
 }
 
+export function getCurrentISOTimestamp(): string {
+  return new Date().toISOString();
+}
+
 export function objectToFormData(obj: Record<string, unknown>): FormData {
   const formData = new FormData();
 
